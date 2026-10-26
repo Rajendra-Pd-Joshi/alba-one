@@ -1,0 +1,48 @@
+# ==============================================================================
+# ALBA ONE — ArgoCD GitOps Applications (`deploy/gitops/applications.yaml`)
+# - Staging auto-syncs on merge to `main` after CI + Eval gates pass.
+# - Production sync requires manual approval gate (`syncPolicy: {}`) after
+#   staging smoke tests and red-team safety checks pass.
+# ==============================================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: alba-one-staging
+  namespace: argocd
+spec:
+  project: alba-one
+  source:
+    repoURL: https://github.com/albaconnect/alba-one.git
+    targetRevision: main
+    path: deploy/helm/alba-one
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-staging.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: alba-one-staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: alba-one-production
+  namespace: argocd
+spec:
+  project: alba-one
+  source:
+    repoURL: https://github.com/albaconnect/alba-one.git
+    targetRevision: main
+    path: deploy/helm/alba-one
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: alba-one-prod
+  # Manual approval gate in ArgoCD for production releases
+  syncPolicy: {}

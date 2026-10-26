@@ -1,0 +1,52 @@
+workflow: "model_release"
+weights_reviewed_by: "TODO(owner): AI Governance Lead must review before composite scoring is enabled"
+criteria:
+  - id: "p95_latency_delta_ms"
+    name_ja: "p95推論レイテンシ差分（ms）"
+    name_en: "p95 Latency Delta (ms)"
+    unit: "ms"
+    direction: "lower_better"
+    kind: "soft_criterion"
+    required: true
+    source:
+      source_id: "experiment_tracking.calculate_model_release_tradeoffs"
+      locator: "value"
+    weight: 0.35
+
+  - id: "ndcg_at_10_delta"
+    name_ja: "検索精度 nDCG@10 差分"
+    name_en: "Retrieval nDCG@10 Delta"
+    unit: "score_delta"
+    direction: "higher_better"
+    kind: "soft_criterion"
+    required: true
+    source:
+      source_id: "experiment_tracking.compare_runs"
+      locator: "deltas.ndcg_at_10_delta"
+    weight: 0.35
+
+  - id: "safety_eval_passed"
+    name_ja: "安全性評価ゲート合格"
+    name_en: "Safety Evaluation Gate Passed"
+    unit: "boolean"
+    direction: "higher_better"
+    kind: "hard_constraint"
+    required: true
+    hard_limit: 1.0
+    is_regulatory_or_safety: true
+    source:
+      source_id: "experiment_tracking.get_release_readiness_summary"
+      locator: "safety_eval_passed"
+    weight: 0.20
+
+  - id: "reversibility"
+    name_ja: "カナリアロールバック容易性"
+    name_en: "Canary Rollback Reversibility"
+    unit: "qualitative"
+    direction: "n/a"
+    kind: "soft_criterion"
+    required: false
+    source:
+      source_id: "qualitative"
+      locator: "reversibility"
+    weight: 0.10

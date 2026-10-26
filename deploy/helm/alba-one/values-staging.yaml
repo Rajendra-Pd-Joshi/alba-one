@@ -1,0 +1,26 @@
+# ==============================================================================
+# ALBA ONE — Staging Helm Values (`deploy/helm/alba-one/values-staging.yaml`)
+# Uses managed staging RDS & ElastiCache (`devInClusterStores.enabled: false`).
+# ==============================================================================
+global:
+  appEnv: staging
+
+api:
+  replicaCount: 2
+  hpa:
+    minReplicas: 2
+    maxReplicas: 4
+  pdb:
+    minAvailable: 1
+
+web:
+  replicaCount: 2
+  hpa:
+    minReplicas: 2
+    maxReplicas: 4
+  pdb:
+    minAvailable: 1
+
+ingress:
+  host: staging.alba-one.albaconnect.co.jp
+  tlsSecretName: alba-one-staging-tls

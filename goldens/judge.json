@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "status": "draft",
+  "description": "Bilingual JP/EN golden dataset for Phase 7 Decision Judge & Verdict Ceiling Gates (status='draft'; requires --allow-draft until reviewed).",
+  "items": [
+    {
+      "id": "judge_ja_001",
+      "status": "draft",
+      "lang": "ja",
+      "workflow": "model_release",
+      "question": "モデルv2.4（ALBA-NEPTUNE-V2.4）を本番カナリア環境へリリースすべきか？",
+      "proposed_verdict": "recommend_approve",
+      "expected_ceiling": "recommend_approve"
+    },
+    {
+      "id": "judge_ja_002_unverified_hard_constraint",
+      "status": "draft",
+      "lang": "ja",
+      "workflow": "delivery_planning",
+      "question": "東京〜名古屋間の定温配送ルートで直行便を手配すべきか？（36協定上限未検証時）",
+      "proposed_verdict": "recommend_approve",
+      "expected_ceiling": "needs_more_info"
+    },
+    {
+      "id": "judge_ja_003_vessel_unverified_ukc",
+      "status": "draft",
+      "lang": "ja",
+      "workflow": "vessel_allocation",
+      "question": "横浜港の強風警報時に東京港B3バースへ優先着岸させるべきか？（UKC基準未検証時）",
+      "proposed_verdict": "recommend_approve",
+      "expected_ceiling": "needs_more_info"
+    },
+    {
+      "id": "judge_en_004",
+      "status": "draft",
+      "lang": "en",
+      "workflow": "model_release",
+      "question": "Should we release model v2.4 to production canary traffic now?",
+      "proposed_verdict": "recommend_approve",
+      "expected_ceiling": "recommend_approve"
+    },
+    {
+      "id": "judge_en_005_unverified_hard_constraint",
+      "status": "draft",
+      "lang": "en",
+      "workflow": "staffing",
+      "question": "Should we extend port stevedore shift hours by 4 hours tonight?",
+      "proposed_verdict": "recommend_approve",
+      "expected_ceiling": "needs_more_info"
+    },
+    {
+      "id": "judge_en_006_conditional_approval",
+      "status": "draft",
+      "lang": "en",
+      "workflow": "model_release",
+      "question": "Should we promote ALBA-NEPTUNE-V2.4 based on latency delta?",
+      "proposed_verdict": "recommend_approve_with_conditions",
+      "expected_ceiling": "recommend_approve"
+    }
+  ]
+}

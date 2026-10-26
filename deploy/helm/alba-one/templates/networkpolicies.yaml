@@ -1,0 +1,117 @@
+# ==============================================================================
+# ALBA ONE — Default-Deny & Explicit-Allow Kubernetes NetworkPolicies
+# (`deploy/helm/alba-one/templates/networkpolicies.yaml`)
+# ==============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+---
+# 1. Edge Ingress -> Web
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-to-web
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: alba-one-web
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 3000
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: alba-one-api
+      ports:
+        - protocol: TCP
+          port: 8000
+---
+# 2. Web -> API, and API -> MCP Servers, Managed RDS/Redis, and Egress Gateway
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-api-traffic
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: alba-one-api
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: alba-one-web
+      ports:
+        - protocol: TCP
+          port: 8000
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/tier: mcp-server
+      ports:
+        - protocol: TCP
+          port: 8100
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: alba-one-egress-gateway
+      ports:
+        - protocol: TCP
+          port: 3128
+    # Managed RDS PostgreSQL (5432) & ElastiCache Redis (6379) within VPC CIDR
+    - to:
+        - ipBlock:
+            cidr: 10.20.0.0/16
+      ports:
+        - protocol: TCP
+          port: 5432
+        - protocol: TCP
+          port: 6379
+---
+# 3. External MCP Servers -> Egress Gateway ONLY (no direct internet egress)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-external-mcp-via-egress-gateway-only
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/tier: mcp-server
+      alba.albaconnect.co.jp/mcp-class: external
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: alba-one-api
+      ports:
+        - protocol: TCP
+          port: 8100
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: alba-one-egress-gateway
+      ports:
+        - protocol: TCP
+          port: 3128

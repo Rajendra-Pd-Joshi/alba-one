@@ -1,0 +1,63 @@
+# ==============================================================================
+# ALBA ONE — Scheduled Staging-Only Red-Team Campaigns
+# (`.github/workflows/redteam-scheduled.yml` — Phase 11)
+#
+# Protected by `.github/CODEOWNERS` (@albaconnect/security-owners).
+# Rules enforced:
+# - Runs on GitHub Actions runners OUTSIDE the production cluster (never as an
+#   in-cluster CronJob in production).
+# - Executes ONLY from the default branch (`refs/heads/main`), never from forks
+#   or PR branches.
+# - Uses concurrency group `redteam-staging-campaign` (`cancel-in-progress: false`)
+#   so runs never overlap, plus `timeout-minutes: 15`.
+# - Uses the `staging` GitHub Environment (no production secrets accessible).
+# - Schedules set in JST outside business hours:
+#   - Nightly (`0 17 * * *` UTC = 02:00 JST)
+#   - Weekly full campaign (`0 18 * * 6` UTC = Sunday 03:00 JST)
+# ==============================================================================
+name: ALBA ONE Scheduled Red-Team (Staging Only)
+
+on:
+  schedule:
+    # 02:00 JST daily (17:00 UTC previous day) — redteam-nightly
+    - cron: "0 17 * * *"
+    # 03:00 JST Sunday (18:00 UTC Saturday) — redteam-weekly
+    - cron: "0 18 * * 6"
+  workflow_run:
+    workflows: ["ALBA ONE CD (Staging Auto-Deploy & Production Gated Release)"]
+    types: [completed]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: redteam-staging-campaign
+  cancel-in-progress: false
+
+jobs:
+  redteam-staging:
+    name: Staging Red-Team Campaign (Smoke / Nightly / Weekly)
+    if: github.ref == 'refs/heads/main' && github.repository == 'albaconnect/alba-one'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: staging
+    steps:
+      - name: Checkout default branch
+        uses: actions/checkout@v4
+
+      - name: Run staging red-team suite with budget & target-identity guards
+        env:
+          REDTEAM_PROD_ENABLED: "0"
+          REDTEAM_REPEATS: ${{ github.event.schedule == '0 18 * * 6' && '5' || '3' }}
+        run: |
+          PYTHONPATH="apps/api/src:." python3 evals/red_team.py --target safe --repeats "${REDTEAM_REPEATS}" > /tmp/redteam_report.json
+          cat /tmp/redteam_report.json
+
+      - name: Upload sanitized red-team report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: redteam-staging-report-${{ github.run_id }}
+          path: /tmp/redteam_report.json
+          retention-days: 90

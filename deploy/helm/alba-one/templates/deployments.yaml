@@ -1,0 +1,161 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alba-one-api
+  labels:
+    app.kubernetes.io/name: alba-one-api
+    app.kubernetes.io/tier: backend
+  annotations:
+    reloader.stakater.com/auto: "{{ .Values.global.reloaderEnabled }}"
+spec:
+  replicas: {{ .Values.api.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: alba-one-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: alba-one-api
+        app.kubernetes.io/tier: backend
+    spec:
+      serviceAccountName: alba-one-api
+      automountServiceAccountToken: false
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: api
+          image: "{{ .Values.global.imageRegistry }}/{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          securityContext:
+            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: alba-one-config
+            - secretRef:
+                name: alba-one-external-secrets
+          volumeMounts:
+            - name: tmp-dir
+              mountPath: /tmp
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.api.resources | nindent 12 }}
+      volumes:
+        - name: tmp-dir
+          emptyDir:
+            medium: Memory
+            sizeLimit: 64Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alba-one-web
+  labels:
+    app.kubernetes.io/name: alba-one-web
+    app.kubernetes.io/tier: frontend
+  annotations:
+    reloader.stakater.com/auto: "{{ .Values.global.reloaderEnabled }}"
+spec:
+  replicas: {{ .Values.web.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: alba-one-web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: alba-one-web
+        app.kubernetes.io/tier: frontend
+    spec:
+      serviceAccountName: alba-one-web
+      automountServiceAccountToken: false
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: web
+          image: "{{ .Values.global.imageRegistry }}/{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          securityContext:
+            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: 3000
+          env:
+            - name: APP_ENV
+              value: "{{ .Values.global.appEnv }}"
+            - name: NEXT_PUBLIC_USE_MOCKS
+              value: "false"
+            - name: FASTAPI_INTERNAL_URL
+              value: "http://alba-one-api:8000"
+          volumeMounts:
+            - name: tmp-dir
+              mountPath: /tmp
+            - name: next-cache
+              mountPath: /app/.next/cache
+          resources:
+            {{- toYaml .Values.web.resources | nindent 12 }}
+      volumes:
+        - name: tmp-dir
+          emptyDir:
+            medium: Memory
+            sizeLimit: 64Mi
+        - name: next-cache
+          emptyDir:
+            sizeLimit: 128Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alba-one-worker
+  labels:
+    app.kubernetes.io/name: alba-one-worker
+    app.kubernetes.io/tier: worker
+  annotations:
+    reloader.stakater.com/auto: "{{ .Values.global.reloaderEnabled }}"
+spec:
+  replicas: {{ .Values.worker.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: alba-one-worker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: alba-one-worker
+        app.kubernetes.io/tier: worker
+    spec:
+      serviceAccountName: alba-one-worker
+      automountServiceAccountToken: false
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: worker
+          image: "{{ .Values.global.imageRegistry }}/{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
+          securityContext:
+            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: alba-one-config
+            - secretRef:
+                name: alba-one-external-secrets
+          volumeMounts:
+            - name: tmp-dir
+              mountPath: /tmp
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
+      volumes:
+        - name: tmp-dir
+          emptyDir:
+            medium: Memory
+            sizeLimit: 64Mi

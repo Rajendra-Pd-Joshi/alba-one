@@ -1,0 +1,40 @@
+# ==============================================================================
+# ALBA ONE — Mutual TLS (mTLS) & Namespace PodSecurity Admission
+# (`deploy/security/mtls-and-pss.yaml`)
+# - Enforces Kubernetes Pod Security Standard `restricted` on `alba-one-prod`
+#   and `alba-one-staging`.
+# - Enforces STRICT mTLS (`PeerAuthentication`) across all pods (API <-> MCP
+#   servers, workers) and originates mTLS for the on-premise PostgreSQL link.
+# ==============================================================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alba-one-prod
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+    istio-injection: enabled
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: alba-one-strict-mtls
+  namespace: alba-one-prod
+spec:
+  mtls:
+    mode: STRICT
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: onprem-kb-postgres-mtls
+  namespace: alba-one-prod
+spec:
+  host: onprem-kb-db.internal.albaconnect.co.jp
+  trafficPolicy:
+    tls:
+      mode: MUTUAL
+      credentialName: onprem-kb-client-mtls-cert
+      sni: onprem-kb-db.internal.albaconnect.co.jp

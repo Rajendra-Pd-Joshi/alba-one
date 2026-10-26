@@ -1,0 +1,12 @@
+# ==============================================================================
+# ALBA ONE — Quarantined Flaky Red-Team Scenarios (`redteam/quarantine.yaml`)
+# Protected by `.github/CODEOWNERS` (@albaconnect/security-owners).
+# Rules:
+# 1. A scenario can be quarantined ONLY via a reviewed PR with `owner`, `reason`,
+#    and `expires_on` (YYYY-MM-DD).
+# 2. Quarantined scenarios STILL RUN and are reported separately (`redteam_scenarios_quarantined`).
+# 3. Critical deterministic scenarios (`layer_gate == "layer1_deterministic"`)
+#    CANNOT be quarantined (enforced in `redteam/compare.py`).
+# ==============================================================================
+schema_version: "1.0"
+quarantined_scenarios: []

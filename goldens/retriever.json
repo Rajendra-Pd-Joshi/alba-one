@@ -1,0 +1,1119 @@
+[
+  {
+    "id": "ret_gold_ja_001",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "東京大井ふ頭から横浜本牧への配送ルートRT-KNT-101の割当車両とSLA時間は？",
+    "expected_output": "割当車両はVH-REEFER-08、SLAは4.0時間以内。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_53a3e1d784cd2da9"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "route",
+      "sla"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_002",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "配送ルートRT-KNT-101ではコールドチェーン定温管理が必要ですか？",
+    "expected_output": "必須（2〜8℃定温管理）。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_53a3e1d784cd2da9"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "route",
+      "cold_chain"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_003",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "配送ルートRT-KNT-102の出発地と到着地、割当車両を教えてください。",
+    "expected_output": "東京大井ふ頭物流センターから千葉湾岸ディストリビューション、車両はVH-DRY-14。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_f145411b2756a683"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "route",
+      "chiba"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_004",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "RT-KNT-102（千葉湾岸向け）のSLA上限時間は何時間ですか？",
+    "expected_output": "SLAは5.5時間以内です。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_f145411b2756a683"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "route",
+      "sla"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_005",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "定温車両VH-REEFER-08の最大積載量と強風時の荷役停止基準は？",
+    "expected_output": "最大積載量は9200kg、瞬間風速15.0m/s超過時は荷役停止。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_f3f85fcf37402bcb"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "equipment",
+      "reefer"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_006",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "一般トラック車両VH-DRY-14の最大積載量と配備ルートは？",
+    "expected_output": "最大積載量は10500kg、ルートRT-KNT-102に配備。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_4c31955ba3ecdca3"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "equipment",
+      "dry"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_007",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "アルバ・オーロラ号（vessel_alba_aurora）の着岸予定バースと積載貨物は？",
+    "expected_output": "東京港大井第3バース（TYO-OI-B3）、積載貨物は医薬品定温コンテナ・精密機器。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_db15c1b21768f69c"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "vessel",
+      "aurora"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_008",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "アルバ・オーロラ号のTEU容量と喫水メートル数は？",
+    "expected_output": "4800 TEU、喫水12.4m。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_db15c1b21768f69c"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "vessel",
+      "draft"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_009",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "東京港大井第3バース（TYO-OI-B3）に着岸予定の船舶とETA時刻は？",
+    "expected_output": "アルバ・オーロラ号、ETAは2026-10-25T06:00:00+09:00。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_db15c1b21768f69c"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "vessel",
+      "eta"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_010",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "アルバ・ホライゾン号（vessel_alba_horizon）の着岸港とバースコードは？",
+    "expected_output": "横浜港本牧D1バース（YOK-HM-D1）。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_ce54bedcae19d51a"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "vessel",
+      "horizon"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_011",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "アルバ・ホライゾン号のTEU容量・喫水・積載貨物を教えてください。",
+    "expected_output": "6200 TEU、喫水13.8m、自動車部品・一般消費財。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_ce54bedcae19d51a"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "vessel",
+      "cargo"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_012",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "医薬品定温コンテナ・精密機器（アルバ・オーロラ号積載）の温度条件と配送期限は？",
+    "expected_output": "2.0〜8.0℃の定温維持および着岸後4.0時間以内の配送が必須。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_ae05c4a4c585f5e3"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "product",
+      "pharma"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_013",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "自動車部品・一般消費財（アルバ・ホライゾン号積載）の貨物カテゴリ規定は？",
+    "expected_output": "アルバ・ホライゾン号で輸送される貨物カテゴリ。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_384cdaa442b170d3"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "product",
+      "auto"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_014",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "要員コードSTF-401の当月残業時間と36協定法定上限は？",
+    "expected_output": "当月残業41.5時間、36協定法定上限45.0時間。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_e95e79e70beeffe0"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "staff",
+      "overtime"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_015",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "STF-401の保有資格と担当シフト時間帯、勤務地は？",
+    "expected_output": "資格はgantry_crane_lead_hazmat、シフト06:00-14:30、東京港大井ふ頭。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_e95e79e70beeffe0"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "staff",
+      "qualification"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_016",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "要員コードSTF-402の当月残業時間と保有資格は？",
+    "expected_output": "当月残業22.0時間、資格はgantry_crane_lead_coldchain。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_d4e5c15c820d1c01"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "staff",
+      "coldchain"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_017",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "東京港大井ふ頭で定温コンテナ荷役資格（gantry_crane_lead_coldchain）を持つ残業余裕のある要員は？",
+    "expected_output": "STF-402（当月残業22.0時間）。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_d4e5c15c820d1c01"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "staff",
+      "allocation"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_018",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "現行本番モデルeta-demand-forecaster v2.3.0-prodの実験IDとnDCG@10は？",
+    "expected_output": "実験IDはexp_2026_09_baseline、nDCG@10=0.842。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_abb4a26331ab481d"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "model_release",
+      "baseline"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_019",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "v2.3.0-prodのp95レイテンシと幻覚率、課題は何ですか？",
+    "expected_output": "p95=410.0ms、幻覚率=0.018。港湾混雑特徴量が未反映。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_abb4a26331ab481d"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "model_release",
+      "latency"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_020",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "候補モデルeta-demand-forecaster v2.4.0-rc1のnDCG@10とp95レイテンシ、幻覚率は？",
+    "expected_output": "nDCG@10=0.881、p95=445.0ms、幻覚率=0.011。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_1bb1492dc2f4ef2f",
+      "chk_parent_child_ja_289540f02b7eb573"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "model_release",
+      "candidate"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_021",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "実験ID exp_2026_10_berth_feat で検証されたモデルバージョンと改善内容は？",
+    "expected_output": "v2.4.0-rc1、バース混雑特徴量を追加しnDCG@10が+3.9pt改善。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_1bb1492dc2f4ef2f",
+      "chk_parent_child_ja_289540f02b7eb573"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "model_release",
+      "experiment"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_022",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "アルバ物流海運デモ株式会社（tenant_alba_demo）のISMS統制と対象業務領域は？",
+    "expected_output": "ISMS統制下で運航・配送・要員・MLリリースの意思決定OSを運用。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_fbb37fe0eface5d2"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "company",
+      "isms"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_023",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "強風警報時に大井第3バース着岸のアルバ・オーロラ号と定温車両VH-REEFER-08を組み合わせる際の条件は？",
+    "expected_output": "喫水12.4m着岸、瞬間風速15m/s超過時停止、RT-KNT-101でSLA 4.0h以内配送。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_db15c1b21768f69c",
+      "chk_parent_child_ja_53a3e1d784cd2da9",
+      "chk_parent_child_ja_f3f85fcf37402bcb"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "vessel",
+      "route"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_024",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "大井ふ頭の朝シフト（06:00-14:30）でSTF-401とSTF-402の残業時間を比較するとどちらを優先配置すべきか？",
+    "expected_output": "STF-401は41.5hで上限45hに近いため、残業22.0hのSTF-402を優先配置。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_e95e79e70beeffe0",
+      "chk_parent_child_ja_d4e5c15c820d1c01"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "staff"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_025",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "eta-demand-forecasterのv2.3.0-prodとv2.4.0-rc1のnDCG@10および幻覚率の比較結果は？",
+    "expected_output": "v2.4.0-rc1がnDCG@10 0.881（vs 0.842）、幻覚率 0.011（vs 0.018）で優位。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_abb4a26331ab481d",
+      "chk_parent_child_ja_1bb1492dc2f4ef2f",
+      "chk_parent_child_ja_289540f02b7eb573"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "model_release"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_026",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "東京大井ふ頭発の2つの配送ルート（RT-KNT-101とRT-KNT-102）の車両種別と積載量の違いは？",
+    "expected_output": "RT-KNT-101はVH-REEFER-08（9200kg）、RT-KNT-102はVH-DRY-14（10500kg）。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_53a3e1d784cd2da9",
+      "chk_parent_child_ja_f145411b2756a683"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "route"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_027",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "アルバ・オーロラ号とアルバ・ホライゾン号の着岸港・TEU容量・喫水の比較は？",
+    "expected_output": "オーロラ号は東京大井B3（4800 TEU、12.4m）、ホライゾン号は横浜本牧D1（6200 TEU、13.8m）。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_db15c1b21768f69c",
+      "chk_parent_child_ja_ce54bedcae19d51a"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "vessel"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_028",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "定温管理が必要な貨物カテゴリと対応する配送ルートRT-KNT-101のSLA条件は？",
+    "expected_output": "医薬品定温コンテナは2〜8℃管理・着岸後4.0時間以内の配送SLA。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_ae05c4a4c585f5e3",
+      "chk_parent_child_ja_53a3e1d784cd2da9"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "cold_chain"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_029",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "車両VH-REEFER-08とVH-DRY-14の風速停止基準と最大積載量の比較は？",
+    "expected_output": "両方とも瞬間風速15.0m/s超過で荷役停止、積載量は9200kg対10500kg。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_f3f85fcf37402bcb",
+      "chk_parent_child_ja_4c31955ba3ecdca3"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "equipment"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_ja_030",
+    "lang": "ja",
+    "eval": "retriever_eval",
+    "input": "大井第3バースの定温荷役において船舶アルバ・オーロラ号と要員STF-402を組み合わせる根拠は？",
+    "expected_output": "オーロラ号の医薬品定温コンテナに対しSTF-402はgantry_crane_lead_coldchain資格を持ち残業22.0h。",
+    "expected_chunk_ids": [
+      "chk_parent_child_ja_db15c1b21768f69c",
+      "chk_parent_child_ja_d4e5c15c820d1c01"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "vessel",
+      "staff"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic Japanese golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_001",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What vehicle and SLA hours are assigned to delivery route RT-KNT-101 from Tokyo Oi Pier to Yokohama Honmoku?",
+    "expected_output": "Vehicle VH-REEFER-08 (10t_reefer_truck) with a 4.0h SLA.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_379d5d3bba3eca5f"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "route",
+      "sla"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_002",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "Does delivery route RT-KNT-101 require 2-8C cold-chain temperature control?",
+    "expected_output": "Yes, mandatory 2-8C cold-chain control.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_379d5d3bba3eca5f"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "route",
+      "cold_chain"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_003",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What is the origin, destination, and assigned truck for delivery route RT-KNT-102?",
+    "expected_output": "Tokyo Oi Pier Logistics Hub to Chiba Bay Distribution Center using VH-DRY-14.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_bfb41e4b20dabd56"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "route",
+      "chiba"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_004",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What is the target SLA hours limit for route RT-KNT-102?",
+    "expected_output": "5.5 hours.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_bfb41e4b20dabd56"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "route",
+      "sla"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_005",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What is the maximum payload capacity and wind speed halt threshold for vehicle VH-REEFER-08?",
+    "expected_output": "9,200 kg max payload; crane transfer halts above 15.0 m/s wind.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_b13d282175c1167f"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "equipment",
+      "reefer"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_006",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What is the maximum payload capacity and assigned route for wing truck VH-DRY-14?",
+    "expected_output": "10,500 kg max payload on route RT-KNT-102.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_ee675d3d1aa64590"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "equipment",
+      "dry"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_007",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "Which port berth and cargo type are scheduled for vessel MV ALBA AURORA (vessel_alba_aurora)?",
+    "expected_output": "Tokyo Port Oi Berth 3 (TYO-OI-B3), carrying Pharma Cold-Chain & Precision Instruments.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_84d6abf1b5a4c858",
+      "chk_parent_child_en_ac7dd69f65e371ce"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "vessel",
+      "aurora"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_008",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What are the TEU capacity and draft in meters of MV ALBA AURORA?",
+    "expected_output": "4,800 TEU capacity and 12.4m draft.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_84d6abf1b5a4c858",
+      "chk_parent_child_en_ac7dd69f65e371ce"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "vessel",
+      "draft"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_009",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What is the scheduled ETA in JST for MV ALBA AURORA at berth TYO-OI-B3?",
+    "expected_output": "2026-10-25T06:00:00+09:00.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_84d6abf1b5a4c858",
+      "chk_parent_child_en_ac7dd69f65e371ce"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "vessel",
+      "eta"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_010",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "Which port and berth is MV ALBA HORIZON (vessel_alba_horizon) scheduled to arrive at?",
+    "expected_output": "Yokohama Port Honmoku Berth D1 (YOK-HM-D1).",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_549d7be7a87bc5e8",
+      "chk_parent_child_en_56e1a7fca8b26f45"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "vessel",
+      "horizon"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_011",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What are the TEU capacity, draft meters, and cargo of MV ALBA HORIZON?",
+    "expected_output": "6,200 TEU, 13.8m draft, Automotive Parts & General Cargo.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_549d7be7a87bc5e8",
+      "chk_parent_child_en_56e1a7fca8b26f45"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "vessel",
+      "cargo"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_012",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What temperature range and delivery window are required for Pharma Cold-Chain & Precision Instruments aboard MV ALBA AURORA?",
+    "expected_output": "2.0-8.0C cold chain and delivery within 4.0 hours.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_9d15933374ef2773"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "product",
+      "pharma"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_013",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What cargo product category is carried aboard MV ALBA HORIZON?",
+    "expected_output": "Automotive Parts & General Cargo.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_9e780cb3ab627daf"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "product",
+      "auto"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_014",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What are the current monthly overtime hours and Article 36 legal cap for staff STF-401?",
+    "expected_output": "41.5h monthly overtime vs 45.0h Article 36 legal cap.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_599bf6e0e3669b7f",
+      "chk_parent_child_en_9cd71fa0a5bf91c8"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "staff",
+      "overtime"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_015",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What qualification and shift window does staff member STF-401 hold at Tokyo Port Oi Pier?",
+    "expected_output": "gantry_crane_lead_hazmat qualification, shift 06:00-14:30.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_599bf6e0e3669b7f",
+      "chk_parent_child_en_9cd71fa0a5bf91c8"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "staff",
+      "qualification"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_016",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What are the monthly overtime hours and qualification of staff member STF-402?",
+    "expected_output": "22.0h monthly overtime, qualification gantry_crane_lead_coldchain.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_bde34a1740e098ee",
+      "chk_parent_child_en_c2d9af0c24fe6dca"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "staff",
+      "coldchain"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_017",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "Which staff member at Tokyo Port Oi Pier holds gantry_crane_lead_coldchain qualification with low overtime?",
+    "expected_output": "STF-402 with 22.0h overtime.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_bde34a1740e098ee",
+      "chk_parent_child_en_c2d9af0c24fe6dca"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "staff",
+      "allocation"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_018",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What are the experiment ID and nDCG@10 score of production model eta-demand-forecaster v2.3.0-prod?",
+    "expected_output": "Experiment exp_2026_09_baseline, nDCG@10=0.842.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_205d3b33f48856e2",
+      "chk_parent_child_en_9e5451a8cfee4481"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "model_release",
+      "baseline"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_019",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What are the p95 latency and hallucination rate of baseline model v2.3.0-prod?",
+    "expected_output": "p95 latency=410.0ms, hallucination_rate=0.018.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_205d3b33f48856e2",
+      "chk_parent_child_en_9e5451a8cfee4481"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "model_release",
+      "latency"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_020",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What are the nDCG@10, p95 latency, and hallucination rate of candidate model v2.4.0-rc1?",
+    "expected_output": "nDCG@10=0.881, p95 latency=445.0ms, hallucination_rate=0.011.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_979e89d68a863c9d",
+      "chk_parent_child_en_f4cbc9c7b8a5519c"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "model_release",
+      "candidate"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_021",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "Which candidate model version was evaluated in experiment exp_2026_10_berth_feat and what features were added?",
+    "expected_output": "v2.4.0-rc1, adding berth congestion features (+3.9pt nDCG@10).",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_979e89d68a863c9d",
+      "chk_parent_child_en_f4cbc9c7b8a5519c"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "model_release",
+      "experiment"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_022",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "How does ALBA Logistics & Maritime Demo Corp (tenant_alba_demo) operate its Decision OS under ISMS controls?",
+    "expected_output": "Operates the ALBA ONE Decision OS under ISMS controls.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_4b84e2a5a2375bd1"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "company",
+      "isms"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_023",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "Compare the overtime hours of staff STF-401 and STF-402 for the 06:00-14:30 shift at Tokyo Port Oi Pier.",
+    "expected_output": "STF-401 has 41.5h (near 45.0h cap) while STF-402 has 22.0h.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_599bf6e0e3669b7f",
+      "chk_parent_child_en_bde34a1740e098ee"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "staff"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_024",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "Compare nDCG@10, p95 latency, and hallucination_rate between eta-demand-forecaster v2.3.0-prod and v2.4.0-rc1.",
+    "expected_output": "v2.4.0-rc1 improves nDCG@10 (0.881 vs 0.842) and hallucination_rate (0.011 vs 0.018) at 445ms p95.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_205d3b33f48856e2",
+      "chk_parent_child_en_979e89d68a863c9d"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "model_release"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_025",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "Compare delivery routes RT-KNT-101 and RT-KNT-102 in terms of vehicle type, max payload, and SLA hours.",
+    "expected_output": "RT-KNT-101 uses VH-REEFER-08 (9200kg, 4.0h SLA); RT-KNT-102 uses VH-DRY-14 (10500kg, 5.5h SLA).",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_379d5d3bba3eca5f",
+      "chk_parent_child_en_bfb41e4b20dabd56"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "route"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_026",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "Compare vessels MV ALBA AURORA and MV ALBA HORIZON across berth code, TEU capacity, and draft meters.",
+    "expected_output": "AURORA at TYO-OI-B3 (4800 TEU, 12.4m); HORIZON at YOK-HM-D1 (6200 TEU, 13.8m).",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_84d6abf1b5a4c858",
+      "chk_parent_child_en_549d7be7a87bc5e8"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "vessel"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_027",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "How do the cold-chain cargo requirements of MV ALBA AURORA connect to delivery route RT-KNT-101?",
+    "expected_output": "Both require 2-8C cold chain and completion within the 4.0h SLA using VH-REEFER-08.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_9d15933374ef2773",
+      "chk_parent_child_en_379d5d3bba3eca5f"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "cold_chain"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_028",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "Compare equipment specifications and wind halt thresholds for VH-REEFER-08 and VH-DRY-14.",
+    "expected_output": "VH-REEFER-08 holds 9200kg and VH-DRY-14 holds 10500kg; both halt crane transfer above 15.0 m/s wind.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_b13d282175c1167f",
+      "chk_parent_child_en_ee675d3d1aa64590"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "equipment"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_029",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "Why is staff member STF-402 suited for unloading MV ALBA AURORA at Tokyo Port Oi Berth 3?",
+    "expected_output": "STF-402 holds gantry_crane_lead_coldchain qualification at Tokyo Port Oi Pier with only 22.0h overtime.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_84d6abf1b5a4c858",
+      "chk_parent_child_en_bde34a1740e098ee"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "vessel",
+      "staff"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  },
+  {
+    "id": "ret_gold_en_030",
+    "lang": "en",
+    "eval": "retriever_eval",
+    "input": "What are the vessel allocation, reefer vehicle, and cold-chain product rules for Tokyo Port Oi Berth 3?",
+    "expected_output": "MV ALBA AURORA berths at TYO-OI-B3 with 2-8C pharma cargo dispatched on VH-REEFER-08 within 4.0h.",
+    "expected_chunk_ids": [
+      "chk_parent_child_en_84d6abf1b5a4c858",
+      "chk_parent_child_en_b13d282175c1167f",
+      "chk_parent_child_en_9d15933374ef2773"
+    ],
+    "retrieval_context": [],
+    "tags": [
+      "multi_hop",
+      "pharma"
+    ],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic English golden item for Phase 3 retriever evaluation."
+  }
+]

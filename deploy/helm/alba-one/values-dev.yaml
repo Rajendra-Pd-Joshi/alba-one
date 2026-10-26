@@ -1,0 +1,24 @@
+# ==============================================================================
+# ALBA ONE — Local Kind / Dev Cluster Values (`deploy/helm/alba-one/values-dev.yaml`)
+# WARNING: NOT FOR PRODUCTION. Enables ephemeral in-cluster Postgres & Redis
+# strictly for local `kind` testing. Production uses managed RDS + ElastiCache.
+# ==============================================================================
+global:
+  appEnv: development
+
+devInClusterStores:
+  # NOT FOR PRODUCTION — only for local kind cluster testing
+  enabled: true
+
+api:
+  replicaCount: 1
+  hpa:
+    enabled: false
+
+web:
+  replicaCount: 1
+  hpa:
+    enabled: false
+
+worker:
+  replicaCount: 1

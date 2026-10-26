@@ -1,0 +1,297 @@
+# ==============================================================================
+# ALBA ONE — MCP Server Registry (Single Source of Truth)
+# Used by:
+#   - apps/api/src/alba_one/mcp_client/ (MultiServerMCPClient configuration)
+#   - apps/api/src/alba_one/api/tools.py (/api/v1/tools catalogue API)
+#   - docs/MCP_CATALOG.md generator & drift tests
+#   - infra/docker-compose.yml & apps/api/Dockerfile.mcp
+# ==============================================================================
+
+version: "1.0.0"
+
+servers:
+  knowledge_base:
+    name: "knowledge_base"
+    class: "read"
+    profile: "core"
+    transport: "streamable-http"
+    port: 8101
+    required_env: ["MCP_BEARER_TOKEN", "DATABASE_URL", "PINECONE_API_KEY"]
+    image_extra: "mcp-knowledge-base"
+    owner: "kb-platform-team"
+    data_sensitivity: "internal_confidential"
+    purpose_ja: "オンプレミスPostgreSQL＋PineconeからのACLフィルタ付ナレッジ検索・エンティティ参照"
+    purpose_en: "ACL-filtered hybrid KB search and business ontology entity lookup"
+
+  sql_readonly:
+    name: "sql_readonly"
+    class: "read"
+    profile: "core"
+    transport: "streamable-http"
+    port: 8102
+    required_env: ["MCP_BEARER_TOKEN", "DATABASE_URL"]
+    image_extra: "mcp-sql-readonly"
+    owner: "data-engineering-team"
+    data_sensitivity: "internal_confidential"
+    purpose_ja: "DBA承認済の読み取り専用ビュー（v_kb_*）に対する安全なSELECTクエリ実行"
+    purpose_en: "Guarded read-only SQL query access against DBA-approved views (v_kb_*)"
+
+  departments:
+    name: "departments"
+    class: "read"
+    profile: "core"
+    transport: "streamable-http"
+    port: 8103
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-departments"
+    owner: "corporate-ops-team"
+    data_sensitivity: "internal_restricted"
+    purpose_ja: "部門別（財務・人事労務・運航・法務コンプライアンス・営業・技術）の指標と承認状況照会"
+    purpose_en: "Read-only department facade (finance, HR, ops, legal/compliance, sales, engineering)"
+
+  approvals:
+    name: "approvals"
+    class: "write"
+    profile: "domain"
+    transport: "streamable-http"
+    port: 8104
+    required_env: ["MCP_BEARER_TOKEN", "DATABASE_URL"]
+    image_extra: "mcp-approvals"
+    owner: "governance-hitl-team"
+    data_sensitivity: "internal_restricted"
+    purpose_ja: "人間による承認リクエスト送信・承認状態確認・未決一覧取得（HITLガードレール連携）"
+    purpose_en: "Human-in-the-loop approval request, status check, and pending queue management"
+
+  experiment_tracking:
+    name: "experiment_tracking"
+    class: "read"
+    profile: "domain"
+    transport: "streamable-http"
+    port: 8105
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-experiment-tracking"
+    owner: "ml-platform-team"
+    data_sensitivity: "internal_confidential"
+    purpose_ja: "MLflow互換の実験一覧・実行メトリクス・ラン比較・モデルバージョン・リリース準備状況照会"
+    purpose_en: "MLflow-compatible adapter for experiments, runs, comparisons, versions, and release readiness"
+
+  benchmark_registry:
+    name: "benchmark_registry"
+    class: "read"
+    profile: "domain"
+    transport: "streamable-http"
+    port: 8106
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-benchmark-registry"
+    owner: "ml-quality-team"
+    data_sensitivity: "internal_confidential"
+    purpose_ja: "社内ベンチマーク評価結果およびモデルバージョン間のリグレッション比較"
+    purpose_en: "Internal benchmark registry and cross-version regression comparisons"
+
+  decision_history:
+    name: "decision_history"
+    class: "read"
+    profile: "core"
+    transport: "streamable-http"
+    port: 8107
+    required_env: ["MCP_BEARER_TOKEN", "DATABASE_URL"]
+    image_extra: "mcp-decision-history"
+    owner: "decision-os-core-team"
+    data_sensitivity: "internal_confidential"
+    purpose_ja: "過去の意思決定・仮説・承認条件・成果レビューの検索および類似案件照会"
+    purpose_en: "Past decisions, hypotheses, approvals, and outcome review similarity search"
+
+  memory:
+    name: "memory"
+    class: "write"
+    profile: "core"
+    transport: "streamable-http"
+    port: 8108
+    required_env: ["MCP_BEARER_TOKEN", "DATABASE_URL"]
+    image_extra: "mcp-memory"
+    owner: "decision-os-core-team"
+    data_sensitivity: "internal_restricted"
+    purpose_ja: "テナント・ユーザー分離された長期メモリの検索・一覧・削除・承認済提案記録"
+    purpose_en: "Policy-gated long-term memory search, listing, deletion, and approved proposal storage"
+
+  delivery_planning:
+    name: "delivery_planning"
+    class: "read"
+    profile: "domain"
+    transport: "streamable-http"
+    port: 8109
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-delivery-planning"
+    owner: "logistics-domain-team"
+    data_sensitivity: "internal_confidential"
+    purpose_ja: "配送ルート・定温車両積載容量・SLA期限の適合性分析"
+    purpose_en: "Delivery route, vehicle payload capacity, and cold-chain SLA analysis"
+
+  staffing:
+    name: "staffing"
+    class: "read"
+    profile: "domain"
+    transport: "streamable-http"
+    port: 8110
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-staffing"
+    owner: "hr-ops-domain-team"
+    data_sensitivity: "internal_restricted"
+    purpose_ja: "港湾・物流要員のシフト・保有資格・36協定残業上限の適合性分析"
+    purpose_en: "Staff shift, qualification, and Article 36 overtime constraint analysis"
+
+  vessel_allocation:
+    name: "vessel_allocation"
+    class: "read"
+    profile: "domain"
+    transport: "streamable-http"
+    port: 8111
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-vessel-allocation"
+    owner: "maritime-domain-team"
+    data_sensitivity: "internal_confidential"
+    purpose_ja: "船舶ETA・バース水深制約・優先貨物（医薬品定温コンテナ）の着岸割当分析"
+    purpose_en: "Vessel berth allocation, draft constraint, and priority cargo analysis"
+
+  document_extraction:
+    name: "document_extraction"
+    class: "read"
+    profile: "domain"
+    transport: "streamable-http"
+    port: 8112
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-document-extraction"
+    owner: "kb-platform-team"
+    data_sensitivity: "internal_confidential"
+    purpose_ja: "オンプレミス文書（PDF・Excel・Word・画像）からのテキスト・表構造抽出"
+    purpose_en: "On-premise PDF, Excel, Word, and image text/table extraction"
+
+  deployment_status:
+    name: "deployment_status"
+    class: "read"
+    profile: "domain"
+    transport: "streamable-http"
+    port: 8113
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-deployment-status"
+    owner: "sre-platform-team"
+    data_sensitivity: "internal_operational"
+    purpose_ja: "CI/CDパイプライン・カナリアロールアウト・本番環境の稼働状態照会"
+    purpose_en: "CI/CD pipeline, canary rollout, and environment health status adapter"
+
+  web_search:
+    name: "web_search"
+    class: "external"
+    profile: "external"
+    transport: "streamable-http"
+    port: 8114
+    required_env: ["MCP_BEARER_TOKEN", "WEB_SEARCH_PROVIDER"]
+    image_extra: "mcp-web-search"
+    owner: "external-intel-team"
+    data_sensitivity: "public_external"
+    purpose_ja: "プロバイダ切替対応（Tavily/Brave/Firecrawl/Fake）の外部Web検索およびSSRF保護付ページ取得"
+    purpose_en: "Pluggable external web search (Tavily/Brave/Firecrawl/Fake) and SSRF-guarded fetch_page"
+
+  news_search:
+    name: "news_search"
+    class: "external"
+    profile: "external"
+    transport: "streamable-http"
+    port: 8115
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-news-search"
+    owner: "external-intel-team"
+    data_sensitivity: "public_external"
+    purpose_ja: "海運・物流・AI業界の公開ニュースおよび速報検索"
+    purpose_en: "Public maritime, logistics, and AI industry news search"
+
+  competitor_intel:
+    name: "competitor_intel"
+    class: "external"
+    profile: "external"
+    transport: "streamable-http"
+    port: 8116
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-competitor-intel"
+    owner: "product-strategy-team"
+    data_sensitivity: "public_external"
+    purpose_ja: "公開情報に基づく競合プロダクト・価格・リリース動向の追跡"
+    purpose_en: "Public-source competitor product, pricing, and release tracking"
+
+  model_benchmarks:
+    name: "model_benchmarks"
+    class: "external"
+    profile: "external"
+    transport: "streamable-http"
+    port: 8117
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-model-benchmarks"
+    owner: "ml-quality-team"
+    data_sensitivity: "public_external"
+    purpose_ja: "公開リーダーボードおよび他社モデルのベンチマーク指標・評価条件の注記付取得"
+    purpose_en: "Public model benchmark leaderboards with evaluation-setup caveats"
+
+  papers:
+    name: "papers"
+    class: "external"
+    profile: "external"
+    transport: "streamable-http"
+    port: 8118
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-papers"
+    owner: "research-team"
+    data_sensitivity: "public_external"
+    purpose_ja: "arXiv / Semantic Scholar 等の公開技術論文検索"
+    purpose_en: "Academic paper search across arXiv and Semantic Scholar"
+
+  github_releases:
+    name: "github_releases"
+    class: "external"
+    profile: "external"
+    transport: "streamable-http"
+    port: 8119
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-github-releases"
+    owner: "sre-platform-team"
+    data_sensitivity: "public_external"
+    purpose_ja: "OSSおよび関連リポジトリの公開リリースノート・変更履歴取得"
+    purpose_en: "Public OSS repository release notes and changelog lookup"
+
+  market_data:
+    name: "market_data"
+    class: "external"
+    profile: "external"
+    transport: "streamable-http"
+    port: 8120
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-market-data"
+    owner: "finance-domain-team"
+    data_sensitivity: "public_external"
+    purpose_ja: "為替（USD/JPY）・燃料価格・海上コンテナ運賃指数の参照"
+    purpose_en: "FX (USD/JPY), bunker fuel, and container freight index lookup"
+
+  weather_marine:
+    name: "weather_marine"
+    class: "external"
+    profile: "external"
+    transport: "streamable-http"
+    port: 8121
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-weather-marine"
+    owner: "maritime-domain-team"
+    data_sensitivity: "public_external"
+    purpose_ja: "主要港湾（東京港・横浜港・名古屋港・大阪港）の風速・波浪・気象警報参照"
+    purpose_en: "Marine weather, gust wind speed, and port advisory lookup"
+
+  regulatory_jp:
+    name: "regulatory_jp"
+    class: "external"
+    profile: "external"
+    transport: "streamable-http"
+    port: 8122
+    required_env: ["MCP_BEARER_TOKEN"]
+    image_extra: "mcp-regulatory-jp"
+    owner: "legal-compliance-team"
+    data_sensitivity: "public_external"
+    purpose_ja: "日本の公開法令・労務基準（36協定・改善基準告示・薬機法GDP）の参照"
+    purpose_en: "Public Japanese regulatory lookup (Article 36 labor law, logistics & pharma GDP)"

@@ -1,0 +1,84 @@
+{
+  "version": "1.1.0",
+  "company": "ALBACONNECT Inc.",
+  "product": "ALBA ONE",
+  "pillars": [
+    {
+      "id": "pillar_1",
+      "ja": "業務の意味とデータの接続",
+      "en": "Business meaning and data"
+    },
+    {
+      "id": "pillar_2",
+      "ja": "業務ごとの判断支援",
+      "en": "Workflow-specific decision support"
+    },
+    {
+      "id": "pillar_3",
+      "ja": "結果と知識の運用",
+      "en": "Outcome and knowledge operations"
+    }
+  ],
+  "terms": {
+    "decision_os": {
+      "ja": "意思決定OS",
+      "en": "Decision OS"
+    },
+    "hypothesis": {
+      "ja": "仮説",
+      "en": "hypothesis"
+    },
+    "evidence": {
+      "ja": "根拠",
+      "en": "evidence"
+    },
+    "confidence": {
+      "ja": "確信度",
+      "en": "confidence"
+    },
+    "approval": {
+      "ja": "承認",
+      "en": "approval"
+    },
+    "rejection": {
+      "ja": "差し戻し",
+      "en": "rejection"
+    },
+    "outcome_review": {
+      "ja": "成果レビュー",
+      "en": "outcome review"
+    },
+    "knowledge_base": {
+      "ja": "ナレッジベース",
+      "en": "knowledge base"
+    },
+    "guardrail": {
+      "ja": "ガードレール",
+      "en": "guardrail"
+    },
+    "ai_recommendation": {
+      "ja": "AI推奨",
+      "en": "AI recommendation"
+    },
+    "human_decision": {
+      "ja": "承認の判断",
+      "en": "Decision"
+    },
+    "action_approve": {
+      "ja": "承認",
+      "en": "Approve"
+    },
+    "action_approve_with_conditions": {
+      "ja": "条件付き承認",
+      "en": "Approve with conditions"
+    },
+    "action_reject": {
+      "ja": "却下",
+      "en": "Reject"
+    },
+    "action_request_more_evidence": {
+      "ja": "追加根拠を依頼",
+      "en": "Request more evidence"
+    }
+  }
+}

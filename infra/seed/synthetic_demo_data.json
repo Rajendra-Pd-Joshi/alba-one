@@ -1,0 +1,157 @@
+{
+  "tenant": {
+    "id": "tenant_alba_demo",
+    "name_ja": "アルバ物流海運デモ株式会社（合成データ）",
+    "name_en": "ALBA Logistics & Maritime Demo Corp (Synthetic)",
+    "isms_enforced": true,
+    "is_synthetic": true
+  },
+  "delivery_routes": [
+    {
+      "id": "route_tk_ym_01",
+      "tenant_id": "tenant_alba_demo",
+      "route_code": "RT-KNT-101",
+      "origin_ja": "東京大井ふ頭物流センター",
+      "origin_en": "Tokyo Oi Pier Logistics Hub",
+      "destination_ja": "横浜本牧ロジスティクス拠点",
+      "destination_en": "Yokohama Honmoku Logistics Depot",
+      "vehicle_id": "VH-REEFER-08",
+      "vehicle_type": "10t_reefer_truck",
+      "max_payload_kg": 9200,
+      "sla_hours": 4.0,
+      "cold_chain_required": true,
+      "is_synthetic": true
+    },
+    {
+      "id": "route_tk_cb_02",
+      "tenant_id": "tenant_alba_demo",
+      "route_code": "RT-KNT-102",
+      "origin_ja": "東京大井ふ頭物流センター",
+      "origin_en": "Tokyo Oi Pier Logistics Hub",
+      "destination_ja": "千葉湾岸ディストリビューション",
+      "destination_en": "Chiba Bay Distribution Center",
+      "vehicle_id": "VH-DRY-14",
+      "vehicle_type": "10t_wing_truck",
+      "max_payload_kg": 10500,
+      "sla_hours": 5.5,
+      "cold_chain_required": false,
+      "is_synthetic": true
+    }
+  ],
+  "vessels_berths": [
+    {
+      "id": "vessel_alba_aurora",
+      "tenant_id": "tenant_alba_demo",
+      "vessel_name_ja": "アルバ・オーロラ号",
+      "vessel_name_en": "MV ALBA AURORA",
+      "berth_code": "TYO-OI-B3",
+      "port_ja": "東京港大井第3バース",
+      "port_en": "Tokyo Port Oi Berth 3",
+      "cargo_type_ja": "医薬品定温コンテナ・精密機器",
+      "cargo_type_en": "Pharma Cold-Chain & Precision Instruments",
+      "teu_capacity": 4800,
+      "eta_jst": "2026-10-25T06:00:00+09:00",
+      "draft_meters": 12.4,
+      "is_synthetic": true
+    },
+    {
+      "id": "vessel_alba_horizon",
+      "tenant_id": "tenant_alba_demo",
+      "vessel_name_ja": "アルバ・ホライゾン号",
+      "vessel_name_en": "MV ALBA HORIZON",
+      "berth_code": "YOK-HM-D1",
+      "port_ja": "横浜港本牧D1バース",
+      "port_en": "Yokohama Port Honmoku Berth D1",
+      "cargo_type_ja": "自動車部品・一般消費財",
+      "cargo_type_en": "Automotive Parts & General Cargo",
+      "teu_capacity": 6200,
+      "eta_jst": "2026-10-25T08:30:00+09:00",
+      "draft_meters": 13.8,
+      "is_synthetic": true
+    }
+  ],
+  "staff_shifts": [
+    {
+      "id": "staff_crane_01",
+      "tenant_id": "tenant_alba_demo",
+      "staff_code": "STF-401",
+      "name_ja": "渡辺 剛",
+      "name_en": "Tsuyoshi Watanabe",
+      "qualification": "gantry_crane_lead_hazmat",
+      "location_ja": "東京港大井ふ頭",
+      "location_en": "Tokyo Port Oi Pier",
+      "shift_window_jst": "06:00-14:30",
+      "overtime_hours_month": 41.5,
+      "max_legal_overtime_hours": 45.0,
+      "is_synthetic": true
+    },
+    {
+      "id": "staff_crane_02",
+      "tenant_id": "tenant_alba_demo",
+      "staff_code": "STF-402",
+      "name_ja": "伊藤 裕子",
+      "name_en": "Yuko Ito",
+      "qualification": "gantry_crane_lead_coldchain",
+      "location_ja": "東京港大井ふ頭",
+      "location_en": "Tokyo Port Oi Pier",
+      "shift_window_jst": "06:00-14:30",
+      "overtime_hours_month": 22.0,
+      "max_legal_overtime_hours": 45.0,
+      "is_synthetic": true
+    }
+  ],
+  "ml_model_releases": [
+    {
+      "id": "ml_eta_predictor_v2_3",
+      "tenant_id": "tenant_alba_demo",
+      "model_family": "eta-demand-forecaster",
+      "version_tag": "v2.3.0-prod",
+      "experiment_id": "exp_2026_09_baseline",
+      "summary_ja": "現行本番モデル：台風遅延時のETA予測精度は安定しているが港湾混雑特徴量が未反映。",
+      "summary_en": "Current production baseline: stable typhoon ETA accuracy but lacks real-time berth congestion features.",
+      "ndcg_at_10": 0.842,
+      "p95_latency_ms": 410.0,
+      "hallucination_rate": 0.018,
+      "release_status": "production",
+      "is_synthetic": true
+    },
+    {
+      "id": "ml_eta_predictor_v2_4_rc1",
+      "tenant_id": "tenant_alba_demo",
+      "model_family": "eta-demand-forecaster",
+      "version_tag": "v2.4.0-rc1",
+      "experiment_id": "exp_2026_10_berth_feat",
+      "summary_ja": "候補モデルv2.4.0-rc1：バース混雑特徴量を追加しnDCG@10が+3.9pt改善、幻覚率も1.1%に低下。",
+      "summary_en": "Candidate v2.4.0-rc1: adds berth congestion features, improving nDCG@10 by +3.9pt and lowering hallucination rate to 1.1%.",
+      "ndcg_at_10": 0.881,
+      "p95_latency_ms": 445.0,
+      "hallucination_rate": 0.011,
+      "release_status": "candidate",
+      "is_synthetic": true
+    }
+  ],
+  "decisions_with_outcomes": [
+    {
+      "id": "dec_synth_vessel_001",
+      "tenant_id": "tenant_alba_demo",
+      "workflow_domain": "vessel_allocation",
+      "lang": "ja",
+      "query_text": "強風警報発令に伴うアルバ・オーロラ号（医薬品定温コンテナ積載）の東京港大井第3バース着岸優先順位と冷蔵車両VH-REEFER-08の割当判断",
+      "verdict": "approve",
+      "approver_id": "user_approver_01",
+      "measured_result": "大井第3バース着岸後3.4時間で横浜本牧拠点へ定温配送完了（SLA 4.0時間以内達成）。伊藤班の残業は+1.5時間（累計23.5h）で労務基準内。",
+      "is_synthetic": true
+    },
+    {
+      "id": "dec_synth_model_002",
+      "tenant_id": "tenant_alba_demo",
+      "workflow_domain": "model_release",
+      "lang": "en",
+      "query_text": "Should we promote eta-demand-forecaster v2.4.0-rc1 to production ahead of the Q4 peak maritime season?",
+      "verdict": "approve",
+      "approver_id": "user_approver_01",
+      "measured_result": "48h canary completed with 0 rollbacks; production ETA error dropped by 14.2% and p95 latency averaged 438ms.",
+      "is_synthetic": true
+    }
+  ]
+}

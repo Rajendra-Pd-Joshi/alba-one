@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "status": "draft",
+  "description": "End-to-End Decision OS golden dataset covering Ask -> Gather -> Hypothesise -> Judge -> HITL Approval -> Outcome Review -> Steward Write-Back.",
+  "items": [
+    {
+      "id": "e2e_ja_001",
+      "status": "draft",
+      "lang": "ja",
+      "workflow": "model_release",
+      "question": "モデルv2.4（ALBA-NEPTUNE-V2.4）を本番カナリア環境へリリースすべきか？",
+      "approval_action": "approve_with_conditions",
+      "approver_role": "ai_governance_lead",
+      "actual_kpis": {
+        "experiment.model_release_delta": -26.5
+      },
+      "outcome_label": "confirmed"
+    },
+    {
+      "id": "e2e_ja_002",
+      "status": "draft",
+      "lang": "ja",
+      "workflow": "delivery_planning",
+      "question": "東京〜名古屋間の定温配送ルートでSLA超過リスクを抑えるため直行便を手配すべきか？",
+      "approval_action": "approve_with_conditions",
+      "approver_role": "logistics_director",
+      "actual_kpis": {
+        "delivery.sla_breach_empirical": 0.15,
+        "delivery.route_cost_jpy": 139500.0
+      },
+      "outcome_label": "confirmed"
+    },
+    {
+      "id": "e2e_en_003",
+      "status": "draft",
+      "lang": "en",
+      "workflow": "model_release",
+      "question": "Should we release model v2.4 to production canary traffic now?",
+      "approval_action": "approve_with_conditions",
+      "approver_role": "ai_governance_lead",
+      "actual_kpis": {
+        "experiment.model_release_delta": -28.0
+      },
+      "outcome_label": "confirmed"
+    },
+    {
+      "id": "e2e_en_004",
+      "status": "draft",
+      "lang": "en",
+      "workflow": "vessel_allocation",
+      "question": "Should we allocate priority berth TYO-B3 for pharma cold-chain cargo during Yokohama wind advisories?",
+      "approval_action": "approve_with_conditions",
+      "approver_role": "port_director",
+      "actual_kpis": {
+        "delivery.route_cost_jpy": 141000.0
+      },
+      "outcome_label": "confirmed"
+    }
+  ]
+}

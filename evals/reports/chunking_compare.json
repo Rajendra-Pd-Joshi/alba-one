@@ -1,0 +1,43 @@
+{
+  "eval": "chunking_compare",
+  "dataset": "goldens/chunking_smoke.json",
+  "total_items": 6,
+  "draft_items": 6,
+  "allow_draft": true,
+  "default_recommended_strategy": "parent_child",
+  "timestamp_utc": "2026-10-24T08:32:31.192791+00:00",
+  "strategies": [
+    {
+      "strategy": "recursive_ja",
+      "total_chunks": 28,
+      "avg_chunk_chars": 154.4,
+      "recall_at_3": 1.0,
+      "mrr_at_3": 1.0,
+      "ndcg_at_3": 1.0
+    },
+    {
+      "strategy": "semantic",
+      "total_chunks": 39,
+      "avg_chunk_chars": 100.3,
+      "recall_at_3": 1.0,
+      "mrr_at_3": 1.0,
+      "ndcg_at_3": 1.0
+    },
+    {
+      "strategy": "parent_child",
+      "total_chunks": 33,
+      "avg_chunk_chars": 173.1,
+      "recall_at_3": 1.0,
+      "mrr_at_3": 1.0,
+      "ndcg_at_3": 1.0
+    },
+    {
+      "strategy": "structure_aware",
+      "total_chunks": 26,
+      "avg_chunk_chars": 654.8,
+      "recall_at_3": 1.0,
+      "mrr_at_3": 1.0,
+      "ndcg_at_3": 1.0
+    }
+  ]
+}

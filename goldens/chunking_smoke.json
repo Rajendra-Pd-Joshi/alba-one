@@ -1,0 +1,74 @@
+[
+  {
+    "id": "chk_gold_001",
+    "lang": "ja",
+    "eval": "chunking_compare",
+    "input": "東京大井ふ頭から横浜本牧への配送ルートRT-KNT-101の割当車両とSLA時間は？",
+    "expected_output": "割当車両はVH-REEFER-08（10t定温トラック）、SLA上限は4.0時間以内。",
+    "expected_entity_ids": ["route_tk_ym_01", "VH-REEFER-08"],
+    "tags": ["route", "sla", "cold_chain"],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic golden item for Phase 2 chunking strategy comparison (JP)."
+  },
+  {
+    "id": "chk_gold_002",
+    "lang": "ja",
+    "eval": "chunking_compare",
+    "input": "アルバ・オーロラ号の着岸予定バースと積載貨物は何ですか？",
+    "expected_output": "東京港大井第3バース（TYO-OI-B3）、積載貨物は医薬品定温コンテナ・精密機器。",
+    "expected_entity_ids": ["vessel_alba_aurora", "TYO-OI-B3"],
+    "tags": ["vessel", "berth"],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic golden item for Phase 2 chunking strategy comparison (JP)."
+  },
+  {
+    "id": "chk_gold_003",
+    "lang": "ja",
+    "eval": "chunking_compare",
+    "input": "ガントリークレーン要員STF-401の当月残業時間と36協定の上限は？",
+    "expected_output": "当月残業時間は41.5時間、36協定の法定上限は45.0時間。",
+    "expected_entity_ids": ["staff_crane_01", "STF-401"],
+    "tags": ["staff", "overtime"],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic golden item for Phase 2 chunking strategy comparison (JP)."
+  },
+  {
+    "id": "chk_gold_004",
+    "lang": "en",
+    "eval": "chunking_compare",
+    "input": "What are the nDCG@10 and p95 latency metrics for candidate model v2.4.0-rc1?",
+    "expected_output": "nDCG@10 is 0.881 and p95 latency is 445.0ms.",
+    "expected_entity_ids": ["ml_eta_predictor_v2_4_rc1", "v2.4.0-rc1"],
+    "tags": ["model_release", "benchmark"],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic golden item for Phase 2 chunking strategy comparison (EN)."
+  },
+  {
+    "id": "chk_gold_005",
+    "lang": "en",
+    "eval": "chunking_compare",
+    "input": "Which berth and port is MV ALBA HORIZON scheduled to arrive at?",
+    "expected_output": "Yokohama Port Honmoku Berth D1 (YOK-HM-D1).",
+    "expected_entity_ids": ["vessel_alba_horizon", "YOK-HM-D1"],
+    "tags": ["vessel", "berth"],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic golden item for Phase 2 chunking strategy comparison (EN)."
+  },
+  {
+    "id": "chk_gold_006",
+    "lang": "en",
+    "eval": "chunking_compare",
+    "input": "What is the maximum payload capacity of vehicle VH-DRY-14 on route RT-KNT-102?",
+    "expected_output": "10,500 kg on route RT-KNT-102 to Chiba Bay Distribution Center.",
+    "expected_entity_ids": ["route_tk_cb_02", "VH-DRY-14"],
+    "tags": ["route", "equipment"],
+    "status": "draft",
+    "reviewer": null,
+    "notes": "Synthetic golden item for Phase 2 chunking strategy comparison (EN)."
+  }
+]

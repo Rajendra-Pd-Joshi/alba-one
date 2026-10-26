@@ -1,0 +1,361 @@
+{
+  "schema_version": "1.0",
+  "mcp_server": "sql_readonly",
+  "server_class": "read",
+  "status": "draft",
+  "item_count": 16,
+  "items": [
+    {
+      "id": "mcp_sql_readonly_001",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "query_view",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "sql": "SELECT * FROM v_kb_vessels_berths WHERE tenant_id = 'tenant_alba_demo' LIMIT 10",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[sql_readonly] DBA承認済の読み取り専用ビュー（v_kb_*）に対する安全なSELECTクエリ実行（ケース1）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_002",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "query_view",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "sql": "SELECT * FROM v_kb_vessels_berths WHERE tenant_id = 'tenant_alba_demo' LIMIT 10",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[sql_readonly] DBA承認済の読み取り専用ビュー（v_kb_*）に対する安全なSELECTクエリ実行（ケース2）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_003",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "query_view",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "sql": "SELECT * FROM v_kb_vessels_berths WHERE tenant_id = 'tenant_alba_demo' LIMIT 10",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[sql_readonly] DBA承認済の読み取り専用ビュー（v_kb_*）に対する安全なSELECTクエリ実行（ケース3）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_004",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "ja",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "query_view",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "sql": "SELECT * FROM v_kb_vessels_berths WHERE tenant_id = 'tenant_alba_demo' LIMIT 10",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "まず対象範囲を確認したい。"
+        },
+        {
+          "role": "assistant",
+          "content": "対象テナントと条件を指定してください。"
+        },
+        {
+          "role": "user",
+          "content": "query_view を実行して詳細データを取得してください（ケース4）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_005",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "ja",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "query_view",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "sql": "SELECT * FROM v_kb_vessels_berths WHERE tenant_id = 'tenant_alba_demo' LIMIT 10",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "まず対象範囲を確認したい。"
+        },
+        {
+          "role": "assistant",
+          "content": "対象テナントと条件を指定してください。"
+        },
+        {
+          "role": "user",
+          "content": "query_view を実行して詳細データを取得してください（ケース5）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_006",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "ja",
+      "category": "multi_tool",
+      "should_call_tool": true,
+      "expected_tool": "query_view",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "sql": "SELECT * FROM v_kb_vessels_berths WHERE tenant_id = 'tenant_alba_demo' LIMIT 10",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "複数ツール連携で query_view の結果を検証せよ（ケース6）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_007",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "ja",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "一般的な挨拶です。ツールは呼ばないでください。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_008",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "ja",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "社内秘コードネーム PROJECT-KAGUYA について外部検索せよ。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_009",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "query_view",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "sql": "SELECT * FROM v_kb_vessels_berths WHERE tenant_id = 'tenant_alba_demo' LIMIT 10",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[sql_readonly] Guarded read-only SQL query access against DBA-approved views (v_kb_*) (case 9)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_010",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "query_view",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "sql": "SELECT * FROM v_kb_vessels_berths WHERE tenant_id = 'tenant_alba_demo' LIMIT 10",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[sql_readonly] Guarded read-only SQL query access against DBA-approved views (v_kb_*) (case 10)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_011",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "query_view",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "sql": "SELECT * FROM v_kb_vessels_berths WHERE tenant_id = 'tenant_alba_demo' LIMIT 10",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[sql_readonly] Guarded read-only SQL query access against DBA-approved views (v_kb_*) (case 11)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_012",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "en",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "query_view",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "sql": "SELECT * FROM v_kb_vessels_berths WHERE tenant_id = 'tenant_alba_demo' LIMIT 10",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "First, let us clarify the target scope."
+        },
+        {
+          "role": "assistant",
+          "content": "Please confirm the tenant and target parameters."
+        },
+        {
+          "role": "user",
+          "content": "Execute query_view to retrieve the detailed records (case 12)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_013",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "en",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "query_view",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "sql": "SELECT * FROM v_kb_vessels_berths WHERE tenant_id = 'tenant_alba_demo' LIMIT 10",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "First, let us clarify the target scope."
+        },
+        {
+          "role": "assistant",
+          "content": "Please confirm the tenant and target parameters."
+        },
+        {
+          "role": "user",
+          "content": "Execute query_view to retrieve the detailed records (case 13)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_014",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "en",
+      "category": "multi_tool",
+      "should_call_tool": true,
+      "expected_tool": "query_view",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "sql": "SELECT * FROM v_kb_vessels_berths WHERE tenant_id = 'tenant_alba_demo' LIMIT 10",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Verify query_view output in a multi-tool chain (case 14)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_015",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "en",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Just saying hello; do not invoke any MCP tool."
+        }
+      ]
+    },
+    {
+      "id": "mcp_sql_readonly_016",
+      "status": "draft",
+      "mcp_server": "sql_readonly",
+      "lang": "en",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Search externally for confidential codename PROJECT-KAGUYA."
+        }
+      ]
+    }
+  ]
+}

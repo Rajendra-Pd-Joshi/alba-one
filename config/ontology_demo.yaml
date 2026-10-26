@@ -1,0 +1,162 @@
+# ALBA ONE — Demo Company Business Ontology (config/ontology_demo.yaml)
+# Pillar 1: Business meaning and data (業務の意味とデータの接続)
+# Maps operational PostgreSQL read-only views to business entities, relationships,
+# ACL permission tags, and decision information fields.
+
+tenant_id: "tenant_alba_demo"
+tenant_name_ja: "アルバ物流海運デモ株式会社（合成データ）"
+tenant_name_en: "ALBA Logistics & Maritime Demo Corp (Synthetic)"
+version: "1.0.0"
+
+entities:
+  company:
+    label_ja: "企業・取引先"
+    label_en: "Company & Partner"
+    source_view: "v_kb_companies"
+    source_table: "tenants"
+    primary_key: "id"
+    acl_tags: ["role:viewer", "role:analyst", "role:approver", "role:admin"]
+    attributes: ["name_ja", "name_en", "isms_enforced"]
+    decision_fields:
+      sla_tier: "enterprise_isms"
+      escalation_owner_role: "approver"
+
+  product:
+    label_ja: "取扱貨物・製品カテゴリ"
+    label_en: "Cargo & Product Category"
+    source_view: "v_kb_products"
+    source_table: "demo_vessels_berths"
+    primary_key: "id"
+    acl_tags: ["role:viewer", "role:analyst", "role:approver", "role:admin"]
+    attributes: ["cargo_type_ja", "cargo_type_en", "cold_chain_required"]
+    decision_fields:
+      temperature_constraint_c: "2.0 to 8.0 (Pharma Cold-Chain)"
+      spoilage_risk_hours: "4.0"
+
+  equipment:
+    label_ja: "荷役設備・輸送車両"
+    label_en: "Handling Equipment & Vehicle"
+    source_view: "v_kb_delivery_routes"
+    source_table: "demo_delivery_routes"
+    primary_key: "vehicle_id"
+    acl_tags: ["role:viewer", "role:analyst", "role:approver", "role:admin"]
+    attributes: ["vehicle_id", "vehicle_type", "max_payload_kg", "cold_chain_required"]
+    decision_fields:
+      wind_speed_halt_threshold_ms: "15.0"
+      max_payload_kg: "max_payload_kg"
+
+  vessel:
+    label_ja: "船舶・バース割当"
+    label_en: "Vessel & Berth Allocation"
+    source_view: "v_kb_vessels_berths"
+    source_table: "demo_vessels_berths"
+    primary_key: "id"
+    acl_tags: ["role:viewer", "role:analyst", "role:approver", "role:admin"]
+    attributes:
+      - "vessel_name_ja"
+      - "vessel_name_en"
+      - "berth_code"
+      - "port_ja"
+      - "port_en"
+      - "cargo_type_ja"
+      - "cargo_type_en"
+      - "teu_capacity"
+      - "eta_jst"
+      - "draft_meters"
+    decision_fields:
+      priority_cargo_rule: "Pharma Cold-Chain vessels receive priority berth allocation"
+      max_berth_draft_meters: "14.5"
+
+  route:
+    label_ja: "配送ルート・SLA条件"
+    label_en: "Delivery Route & SLA"
+    source_view: "v_kb_delivery_routes"
+    source_table: "demo_delivery_routes"
+    primary_key: "id"
+    acl_tags: ["role:viewer", "role:analyst", "role:approver", "role:admin"]
+    attributes:
+      - "route_code"
+      - "origin_ja"
+      - "origin_en"
+      - "destination_ja"
+      - "destination_en"
+      - "vehicle_id"
+      - "vehicle_type"
+      - "max_payload_kg"
+      - "sla_hours"
+      - "cold_chain_required"
+    decision_fields:
+      target_sla_hours: "sla_hours"
+      cold_chain_mandatory: "cold_chain_required"
+
+  staff:
+    label_ja: "要員・シフト・労務制約"
+    label_en: "Staff, Shift & Labor Constraints"
+    source_view: "v_kb_staff_shifts"
+    source_table: "demo_staff_shifts"
+    primary_key: "id"
+    acl_tags: ["role:analyst", "role:approver", "role:admin"]
+    attributes:
+      - "staff_code"
+      - "name_ja"
+      - "name_en"
+      - "qualification"
+      - "location_ja"
+      - "location_en"
+      - "shift_window_jst"
+      - "overtime_hours_month"
+      - "max_legal_overtime_hours"
+    decision_fields:
+      article_36_monthly_cap_hours: "max_legal_overtime_hours"
+      weather_shift_exclusion_threshold_hours: "40.0"
+
+  model_release:
+    label_ja: "機械学習モデルリリース・評価指標"
+    label_en: "ML Model Release & Benchmark"
+    source_view: "v_kb_ml_model_releases"
+    source_table: "demo_ml_model_releases"
+    primary_key: "id"
+    acl_tags: ["role:analyst", "role:approver", "role:admin"]
+    attributes:
+      - "model_family"
+      - "version_tag"
+      - "experiment_id"
+      - "summary_ja"
+      - "summary_en"
+      - "ndcg_at_10"
+      - "p95_latency_ms"
+      - "hallucination_rate"
+      - "release_status"
+    decision_fields:
+      slo_max_p95_latency_ms: "600.0"
+      slo_max_hallucination_rate: "0.015"
+      rollout_policy: "20% canary for 48 hours required before production cutover"
+
+relations:
+  - name: "vessel_discharges_to_route"
+    from_entity: "vessel"
+    to_entity: "route"
+    join_Condition: "demo_vessels_berths.port_ja -> demo_delivery_routes.origin_ja"
+    description_ja: "船舶の着岸港から配送ルートの出発拠点へ貨物を引き継ぐ関係"
+    description_en: "Links arrival vessel port to outbound delivery route origin hub"
+
+  - name: "route_uses_equipment"
+    from_entity: "route"
+    to_entity: "equipment"
+    join_condition: "demo_delivery_routes.vehicle_id = equipment.vehicle_id"
+    description_ja: "配送ルートに割り当てられる定温・一般トラック車両"
+    description_en: "Assigns reefer or dry wing trucks to a delivery route"
+
+  - name: "staff_operates_berth_equipment"
+    from_entity: "staff"
+    to_entity: "vessel"
+    join_condition: "demo_staff_shifts.location_ja = demo_vessels_berths.port_ja"
+    description_ja: "荷役資格保有スタッフが港湾バースのクレーン・定温荷役を担当"
+    description_en: "Qualified crane and cold-chain staff assigned to port berths"
+
+  - name: "model_predicts_vessel_eta"
+    from_entity: "model_release"
+    to_entity: "vessel"
+    join_condition: "demo_ml_model_releases.model_family = 'eta-demand-forecaster'"
+    description_ja: "ETA予測モデルが船舶着岸時刻およびバース混雑度を予測"
+    description_en: "ETA forecaster model predicts vessel arrival and berth congestion"

@@ -1,0 +1,37 @@
+{
+  "name": "@alba-one/web",
+  "version": "0.8.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "node ./scripts/assert-no-mocks-in-prod.mjs && next build",
+    "start": "next start --port 3000",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "vitest run",
+    "test:e2e:mock": "playwright test --project=mock",
+    "test:e2e:live": "playwright test --project=e2e"
+  },
+  "dependencies": {
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.0",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "22.9.0",
+    "@types/react": "19.0.1",
+    "@types/react-dom": "19.0.1",
+    "autoprefixer": "^10.6.1",
+    "next": "^15.5.28",
+    "next-intl": "^3.26.5",
+    "openapi-typescript": "7.4.3",
+    "postcss": "^8.5.31",
+    "tailwindcss": "3.4.15",
+    "typescript": "5.6.3",
+    "vitest": "2.1.5"
+  },
+  "allowScripts": {
+    "esbuild@0.21.5": true
+  }
+}

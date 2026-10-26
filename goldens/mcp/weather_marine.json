@@ -1,0 +1,361 @@
+{
+  "schema_version": "1.0",
+  "mcp_server": "weather_marine",
+  "server_class": "external",
+  "status": "draft",
+  "item_count": 16,
+  "items": [
+    {
+      "id": "mcp_weather_marine_001",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_port_weather",
+      "expected_arguments": {
+        "port_code": "YOK",
+        "tenant_id": "tenant_alba_demo",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[weather_marine] 主要港湾（東京港・横浜港・名古屋港・大阪港）の風速・波浪・気象警報参照（ケース1）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_002",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_port_weather",
+      "expected_arguments": {
+        "port_code": "YOK",
+        "tenant_id": "tenant_alba_demo",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[weather_marine] 主要港湾（東京港・横浜港・名古屋港・大阪港）の風速・波浪・気象警報参照（ケース2）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_003",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_port_weather",
+      "expected_arguments": {
+        "port_code": "YOK",
+        "tenant_id": "tenant_alba_demo",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[weather_marine] 主要港湾（東京港・横浜港・名古屋港・大阪港）の風速・波浪・気象警報参照（ケース3）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_004",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "ja",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_port_weather",
+      "expected_arguments": {
+        "port_code": "YOK",
+        "tenant_id": "tenant_alba_demo",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "まず対象範囲を確認したい。"
+        },
+        {
+          "role": "assistant",
+          "content": "対象テナントと条件を指定してください。"
+        },
+        {
+          "role": "user",
+          "content": "get_port_weather を実行して詳細データを取得してください（ケース4）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_005",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "ja",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_port_weather",
+      "expected_arguments": {
+        "port_code": "YOK",
+        "tenant_id": "tenant_alba_demo",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "まず対象範囲を確認したい。"
+        },
+        {
+          "role": "assistant",
+          "content": "対象テナントと条件を指定してください。"
+        },
+        {
+          "role": "user",
+          "content": "get_port_weather を実行して詳細データを取得してください（ケース5）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_006",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "ja",
+      "category": "multi_tool",
+      "should_call_tool": true,
+      "expected_tool": "get_port_weather",
+      "expected_arguments": {
+        "port_code": "YOK",
+        "tenant_id": "tenant_alba_demo",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "複数ツール連携で get_port_weather の結果を検証せよ（ケース6）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_007",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "ja",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "一般的な挨拶です。ツールは呼ばないでください。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_008",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "ja",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "社内秘コードネーム PROJECT-KAGUYA について外部検索せよ。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_009",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_port_weather",
+      "expected_arguments": {
+        "port_code": "YOK",
+        "tenant_id": "tenant_alba_demo",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[weather_marine] Marine weather, gust wind speed, and port advisory lookup (case 9)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_010",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_port_weather",
+      "expected_arguments": {
+        "port_code": "YOK",
+        "tenant_id": "tenant_alba_demo",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[weather_marine] Marine weather, gust wind speed, and port advisory lookup (case 10)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_011",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_port_weather",
+      "expected_arguments": {
+        "port_code": "YOK",
+        "tenant_id": "tenant_alba_demo",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[weather_marine] Marine weather, gust wind speed, and port advisory lookup (case 11)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_012",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "en",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_port_weather",
+      "expected_arguments": {
+        "port_code": "YOK",
+        "tenant_id": "tenant_alba_demo",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "First, let us clarify the target scope."
+        },
+        {
+          "role": "assistant",
+          "content": "Please confirm the tenant and target parameters."
+        },
+        {
+          "role": "user",
+          "content": "Execute get_port_weather to retrieve the detailed records (case 12)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_013",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "en",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_port_weather",
+      "expected_arguments": {
+        "port_code": "YOK",
+        "tenant_id": "tenant_alba_demo",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "First, let us clarify the target scope."
+        },
+        {
+          "role": "assistant",
+          "content": "Please confirm the tenant and target parameters."
+        },
+        {
+          "role": "user",
+          "content": "Execute get_port_weather to retrieve the detailed records (case 13)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_014",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "en",
+      "category": "multi_tool",
+      "should_call_tool": true,
+      "expected_tool": "get_port_weather",
+      "expected_arguments": {
+        "port_code": "YOK",
+        "tenant_id": "tenant_alba_demo",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Verify get_port_weather output in a multi-tool chain (case 14)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_015",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "en",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Just saying hello; do not invoke any MCP tool."
+        }
+      ]
+    },
+    {
+      "id": "mcp_weather_marine_016",
+      "status": "draft",
+      "mcp_server": "weather_marine",
+      "lang": "en",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Search externally for confidential codename PROJECT-KAGUYA."
+        }
+      ]
+    }
+  ]
+}

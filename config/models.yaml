@@ -1,0 +1,107 @@
+# ALBA ONE — Model Catalog, Routing & Pricing Configuration
+# Principle 6: No hardcoded model IDs or prices in source code.
+#
+# Known Rerank Model Aliases by Provider (check your gateway's docs for its exact slug):
+# +---------------------------+----------------------------------+-----------------------------------------------+
+# | RERANK_PROVIDER           | RERANK_MODEL (Slug)              | Notes                                         |
+# +---------------------------+----------------------------------+-----------------------------------------------+
+# | cohere_direct             | rerank-v4.0-pro                  | Official Cohere v2 API flagship (Default)     |
+# | cohere_direct             | rerank-v3.5                      | Official Cohere v2 multilingual model         |
+# | cohere_direct             | rerank-multilingual-v3.0         | Legacy v3 multilingual identifier             |
+# | gateway                   | rerank-4-pro                     | Short slug on select third-party gateways     |
+# | gateway                   | cohere/rerank-4-pro              | Provider-prefixed gateway slug                |
+# | gateway                   | cohere/rerank-v4-pro             | Variant provider-prefixed gateway slug        |
+# +---------------------------+----------------------------------+-----------------------------------------------+
+
+price_table_version: "2026-10-24.v1"
+cost_currency: "USD"
+display_currency: "JPY"
+fx_usdjpy: 151.45
+fx_rate_date: "2026-10-24"
+
+models:
+  gpt-4o-2024-08-06:
+    provider: openai
+    role: main_and_judge
+    context_window: 128000
+    input_per_1m_usd: 2.50
+    output_per_1m_usd: 10.00
+    supports_structured_output: true
+
+  gpt-4o-mini-2024-07-18:
+    provider: openai
+    role: fallback
+    context_window: 128000
+    input_per_1m_usd: 0.15
+    output_per_1m_usd: 0.60
+    supports_structured_output: true
+
+  claude-3-5-sonnet-20241022:
+    provider: anthropic
+    role: eval_judge
+    context_window: 200000
+    input_per_1m_usd: 3.00
+    output_per_1m_usd: 15.00
+    supports_structured_output: true
+
+  text-embedding-3-large:
+    provider: openai
+    role: embedding
+    dimensions: 1536
+    input_per_1m_usd: 0.13
+    output_per_1m_usd: 0.00
+
+  rerank-v4.0-pro:
+    provider: cohere_direct
+    role: reranker
+    input_per_1m_usd: 2.00
+    output_per_1m_usd: 0.00
+
+  rerank-v3.5:
+    provider: cohere_direct
+    role: reranker
+    input_per_1m_usd: 2.00
+    output_per_1m_usd: 0.00
+
+  rerank-multilingual-v3.0:
+    provider: cohere_direct
+    role: reranker
+    input_per_1m_usd: 2.00
+    output_per_1m_usd: 0.00
+
+  rerank-4-pro:
+    provider: gateway
+    role: reranker
+    input_per_1m_usd: 2.00
+    output_per_1m_usd: 0.00
+
+  cohere/rerank-4-pro:
+    provider: gateway
+    role: reranker
+    input_per_1m_usd: 2.00
+    output_per_1m_usd: 0.00
+
+  cohere/rerank-v4-pro:
+    provider: gateway
+    role: reranker
+    input_per_1m_usd: 2.00
+    output_per_1m_usd: 0.00
+
+gateways:
+  portkey:
+    default_base_url: "https://api.portkey.ai/v1"
+    auth_header: "x-portkey-api-key"
+    metadata_header: "x-portkey-metadata"
+    config_header: "x-portkey-config"
+  bifrost:
+    default_base_url: "http://localhost:8080/v1"
+    auth_header: "Authorization"
+    metadata_header: "x-bf-metadata"
+  tensorzero:
+    default_base_url: "http://localhost:3000/openai/v1"
+    auth_header: "Authorization"
+    metadata_header: "x-tensorzero-tags"
+  mesh:
+    default_base_url: "https://api.mesh.ai/v1"
+    auth_header: "Authorization"
+    metadata_header: "x-mesh-metadata"

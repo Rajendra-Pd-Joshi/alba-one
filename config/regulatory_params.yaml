@@ -1,0 +1,93 @@
+# ==============================================================================
+# ALBA ONE — Legal, Regulatory, Tax & Safety Parameters (config/regulatory_params.yaml)
+#
+# Per Phase 6 User Answer 3:
+# - Never hardcode legal, regulatory, tax, or safety limits in Python code.
+# - Every parameter entry MUST declare `source`, `effective_date`, and `verified_by`.
+# - Calculators REFUSE to return a numeric compliance verdict (`status="parameters_not_verified"`)
+#   whenever `verified_by` is empty or starts with `TODO(owner)`.
+# - Every calculator output using these parameters carries the mandatory disclaimer:
+#   "Decision support only, not legal or regulatory advice; requires HR/legal/safety owner review."
+# ==============================================================================
+
+schema_version: "1.0"
+disclaimer_ja: "本計算結果は意思決定支援用の参考値であり、法的助言または安全保証ではありません。人事・法務・安全管理責任者の確認が必要です。"
+disclaimer_en: "Decision support only, not legal or safety advice; requires HR, legal, or safety owner review."
+
+parameters:
+  jp_labor_article36_monthly_overtime_hours:
+    category: "labor_law_jp"
+    title_ja: "労働基準法第36条 時間外労働の原則上限（月間）"
+    title_en: "Japan Labor Standards Act Article 36 General Monthly Overtime Cap"
+    value: 45.0
+    unit: "hours/month"
+    source: "労働基準法第36条第4項（厚生労働省 時間外労働の上限規制）"
+    source_url: "https://elaws.e-gov.go.jp/document?lawid=322AC0000000049"
+    effective_date: "2024-04-01"
+    verified_by: "TODO(owner): HR & Legal Counsel sign-off required before production use"
+
+  jp_labor_article36_annual_overtime_hours:
+    category: "labor_law_jp"
+    title_ja: "労働基準法第36条 時間外労働の原則上限（年間）"
+    title_en: "Japan Labor Standards Act Article 36 General Annual Overtime Cap"
+    value: 360.0
+    unit: "hours/year"
+    source: "労働基準法第36条第4項"
+    source_url: "https://elaws.e-gov.go.jp/document?lawid=322AC0000000049"
+    effective_date: "2024-04-01"
+    verified_by: "TODO(owner): HR & Legal Counsel sign-off required before production use"
+
+  jp_logistics_driver_annual_overtime_hours:
+    category: "logistics_labor_jp"
+    title_ja: "自動車運転者の労働時間等の改善のための基準（2024年問題上限）"
+    title_en: "2024 Revised Standards for Improvement of Working Hours of Commercial Drivers"
+    value: 960.0
+    unit: "hours/year"
+    source: "厚生労働省告示（改善基準告示 2024年4月改正）"
+    source_url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/roudoukijun/gyosyu/roudoujouken05/index.html"
+    effective_date: "2024-04-01"
+    verified_by: "TODO(owner): HR & Logistics Compliance Officer sign-off required"
+
+  pharma_gdp_cold_chain_min_temp_c:
+    category: "pharma_gdp_jp"
+    title_ja: "医薬品の適正流通（GDP）ガイドライン 保冷輸送下限温度"
+    title_en: "Japan MHLW Pharmaceutical GDP Cold-Chain Minimum Temperature"
+    value: 2.0
+    unit: "celsius"
+    source: "厚生労働省 医薬品の適正流通（GDP）ガイドライン"
+    source_url: "https://www.mhlw.go.jp/content/11120000/000466215.pdf"
+    effective_date: "2018-12-28"
+    verified_by: "TODO(owner): Pharmaceutical Quality Assurance Person (品質保証責任者) sign-off required"
+
+  pharma_gdp_cold_chain_max_temp_c:
+    category: "pharma_gdp_jp"
+    title_ja: "医薬品の適正流通（GDP）ガイドライン 保冷輸送上限温度"
+    title_en: "Japan MHLW Pharmaceutical GDP Cold-Chain Maximum Temperature"
+    value: 8.0
+    unit: "celsius"
+    source: "厚生労働省 医薬品の適正流通（GDP）ガイドライン"
+    source_url: "https://www.mhlw.go.jp/content/11120000/000466215.pdf"
+    effective_date: "2018-12-28"
+    verified_by: "TODO(owner): Pharmaceutical Quality Assurance Person (品質保証責任者) sign-off required"
+
+  port_berth_under_keel_clearance_min_m:
+    category: "maritime_safety_jp"
+    title_ja: "港湾バース着岸時 最小余裕水深（UKC）基準"
+    title_en: "Minimum Under-Keel Clearance (UKC) for Container Berth Allocation"
+    value: 1.2
+    unit: "meters"
+    source: "国土交通省 港湾の施設の技術上の基準・同解説"
+    source_url: "https://www.mlit.go.jp/kowan/kowan_fr5_000018.html"
+    effective_date: "2020-04-01"
+    verified_by: "TODO(owner): Port Captain / Maritime Safety Officer sign-off required"
+
+  port_crane_wind_suspension_threshold_ms:
+    category: "maritime_safety_jp"
+    title_ja: "ガントリークレーン荷役停止 最大瞬間風速基準"
+    title_en: "Gantry Crane Operations Wind Gust Suspension Threshold"
+    value: 15.0
+    unit: "m/s"
+    source: "港湾貨物運送事業労働災害防止規程・港湾荷役安全基準"
+    source_url: "https://www.mlit.go.jp/kowan/"
+    effective_date: "2023-04-01"
+    verified_by: "TODO(owner): Port Operations Safety Director sign-off required"

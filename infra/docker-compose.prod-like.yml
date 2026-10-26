@@ -1,0 +1,256 @@
+# ==============================================================================
+# ALBA ONE — Local Production-Like Hardening & Network-Segmentation Test Compose
+# (`infra/docker-compose.prod-like.yml`)
+#
+# IMPORTANT NOTICE:
+# This file is **NOT a production deployment target**. Kubernetes (Helm + ArgoCD
+# under `deploy/helm` and `deploy/gitops`) paired with managed cloud services
+# (`deploy/terraform`) is the production deployment path.
+# This Compose file exists strictly to reproduce and verify production container
+# hardening (`read_only: true`, `cap_drop: [ALL]`, `no-new-privileges:true`,
+# `pids_limit`, resource limits) and 4-tier network segmentation (`edge`, `app`,
+# `data`, `egress`) locally.
+# ==============================================================================
+
+x-hardened-common: &hardened-common
+  read_only: true
+  cap_drop:
+    - ALL
+  security_opt:
+    - no-new-privileges:true
+  pids_limit: 128
+  restart: unless-stopped
+
+services:
+  proxy:
+    image: caddy:2.8.4-alpine@sha256:666c7172b8869a4fb048f6e80bd20b4c14edefcf99bd671f37fc9fb522a0aa63
+    <<: *hardened-common
+    ports:
+      - "8443:443"
+      - "8080:80"
+    volumes:
+      - ../deploy/docker/Caddyfile:/etc/caddy/Caddyfile:ro
+    tmpfs:
+      - /tmp:size=32m,noexec,nosuid,nodev
+      - /data:size=32m,noexec,nosuid,nodev
+      - /config:size=16m,noexec,nosuid,nodev
+    networks:
+      - edge
+    depends_on:
+      - web
+    deploy:
+      resources:
+        # TODO(owner): tune from measured load tests
+        limits:
+          cpus: "0.50"
+          memory: 256M
+        reservations:
+          cpus: "0.10"
+          memory: 64M
+
+  web:
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile
+    <<: *hardened-common
+    environment:
+      APP_ENV: staging
+      NODE_ENV: production
+      NEXT_PUBLIC_USE_MOCKS: "false"
+      FASTAPI_INTERNAL_URL: http://api:8000
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+      - /app/.next/cache:size=128m,noexec,nosuid,nodev
+    networks:
+      - edge
+      - app
+    depends_on:
+      - api
+    deploy:
+      resources:
+        # TODO(owner): tune from measured load tests
+        limits:
+          cpus: "1.00"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+
+  api:
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile
+      target: api
+    <<: *hardened-common
+    env_file:
+      - ${PROD_LIKE_ENV_FILE:-.env.prod-like}
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+    networks:
+      - edge
+      - app
+      - data
+    depends_on:
+      - postgres
+      - redis
+    deploy:
+      resources:
+        # TODO(owner): tune from measured load tests
+        limits:
+          cpus: "1.50"
+          memory: 1024M
+        reservations:
+          cpus: "0.50"
+          memory: 512M
+
+  worker:
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile
+      target: worker
+    <<: *hardened-common
+    env_file:
+      - ${PROD_LIKE_ENV_FILE:-.env.prod-like}
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+    networks:
+      - app
+      - data
+    depends_on:
+      - postgres
+      - redis
+    deploy:
+      resources:
+        # TODO(owner): tune from measured load tests
+        limits:
+          cpus: "1.00"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+
+  mcp-knowledge-base:
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile.mcp
+      args:
+        MCP_SERVER: knowledge_base
+        MCP_EXTRA: mcp-knowledge-base
+    <<: *hardened-common
+    env_file:
+      - ${PROD_LIKE_ENV_FILE:-.env.prod-like}
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+    networks:
+      - app
+      - data
+    deploy:
+      resources:
+        # TODO(owner): tune from measured load tests
+        limits:
+          cpus: "0.75"
+          memory: 512M
+        reservations:
+          cpus: "0.20"
+          memory: 192M
+
+  mcp-web-search:
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile.mcp
+      args:
+        MCP_SERVER: web_search
+        MCP_EXTRA: mcp-web-search
+    <<: *hardened-common
+    env_file:
+      - ${PROD_LIKE_ENV_FILE:-.env.prod-like}
+    environment:
+      HTTPS_PROXY: http://egress-proxy:3128
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+    networks:
+      - app
+      - egress
+    deploy:
+      resources:
+        # TODO(owner): tune from measured load tests
+        limits:
+          cpus: "0.50"
+          memory: 384M
+        reservations:
+          cpus: "0.10"
+          memory: 128M
+
+  egress-proxy:
+    image: ubuntu/squid:5.2-22.04_beta@sha256:9ee149fc077c1f99a1e3883f22b44451fb99ff908fb73d55847e9fc5d0f26b45
+    <<: *hardened-common
+    tmpfs:
+      - /tmp:size=32m,noexec,nosuid,nodev
+      - /var/spool/squid:size=64m,noexec,nosuid,nodev
+      - /var/log/squid:size=32m,noexec,nosuid,nodev
+      - /run:size=16m,noexec,nosuid,nodev
+    networks:
+      - egress
+    deploy:
+      resources:
+        # TODO(owner): tune from measured load tests
+        limits:
+          cpus: "0.50"
+          memory: 256M
+        reservations:
+          cpus: "0.10"
+          memory: 64M
+
+  # Databases publish NO host ports and attach ONLY to the internal `data` network
+  postgres:
+    image: pgvector/pgvector:pg16@sha256:8bd8b237a5b93cd5910b09b4e5a2c61cb261bc1268b38282b95163cb556b5d8b
+    <<: *hardened-common
+    environment:
+      POSTGRES_USER: alba
+      POSTGRES_DB: alba_one
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+      - /var/run/postgresql:size=16m,noexec,nosuid,nodev
+      - /var/lib/postgresql/data:size=512m,noexec,nosuid,nodev
+    networks:
+      - data
+    deploy:
+      resources:
+        # TODO(owner): tune from measured load tests
+        limits:
+          cpus: "1.00"
+          memory: 1024M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+
+  redis:
+    image: redis:7.4.1-alpine@sha256:c5b6e84b1d5a60b67e6d1efdf44b4aa9727481362709876d56f3cb4e5e4f58f4
+    <<: *hardened-common
+    tmpfs:
+      - /tmp:size=32m,noexec,nosuid,nodev
+      - /data:size=128m,noexec,nosuid,nodev
+    networks:
+      - data
+    deploy:
+      resources:
+        # TODO(owner): tune from measured load tests
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          cpus: "0.10"
+          memory: 128M
+
+networks:
+  edge:
+    driver: bridge
+  app:
+    driver: bridge
+    internal: true
+  data:
+    driver: bridge
+    internal: true
+  egress:
+    driver: bridge

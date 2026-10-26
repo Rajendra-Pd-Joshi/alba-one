@@ -1,0 +1,107 @@
+{
+  "brand": {
+    "product": "ALBA ONE",
+    "company": "ALBACONNECT Inc.",
+    "tagline": "Enterprise platform for building and operating your Decision OS",
+    "isms_notice": "ISMS Certified (ISO/IEC 27001)",
+    "copyright": "© 2026 ALBACONNECT Inc."
+  },
+  "nav": {
+    "decision_workspace": "Decision Workspace",
+    "approvals": "Approvals",
+    "knowledge": "Knowledge Base",
+    "tools": "Tools & MCP",
+    "quality": "Quality & Guardrails",
+    "outcomes": "Outcome Reviews",
+    "new_decision": "Start New Decision"
+  },
+  "pillars": {
+    "business_meaning_and_data": "Business meaning and data",
+    "workflow_decision_support": "Workflow-specific decision support",
+    "outcome_and_knowledge_ops": "Outcome and knowledge operations"
+  },
+  "glossary": {
+    "decision_os": "Decision OS",
+    "hypothesis": "hypothesis",
+    "evidence": "evidence",
+    "confidence": "confidence",
+    "approval": "approval",
+    "rejection": "rejection",
+    "outcome_review": "outcome review",
+    "knowledge_base": "knowledge base",
+    "guardrail": "guardrail",
+    "ai_recommendation": "AI recommendation",
+    "human_decision": "Decision",
+    "action_approve": "Approve",
+    "action_approve_with_conditions": "Approve with conditions",
+    "action_reject": "Reject",
+    "action_request_more_evidence": "Request more evidence"
+  },
+  "workspace": {
+    "ai_recommendation_title": "AI recommendation (Decision Judge output)",
+    "human_decision_title": "Decision (Human accountable action)",
+    "ceiling_applied": "Ceiling applied",
+    "original_model_verdict": "Original model verdict",
+    "final_clamped_verdict": "Final gate-clamped verdict",
+    "gates_banner_title": "Applied Verdict Ceiling Gates",
+    "gate_blocking_note": "Cannot be recommended for approval until required constraint is verified",
+    "hypotheses_section_title": "Validated Hypotheses & Evidence Ledger",
+    "baseline_badge": "Mandatory Baseline (Status Quo)"
+  },
+  "comparison": {
+    "table_title": "Deterministic Option Comparison Table",
+    "option_column": "Option (Hypothesis)",
+    "parameters_not_verified": "Parameters not verified",
+    "insufficient_data": "Insufficient data",
+    "missing": "Missing",
+    "no_evidence": "No evidence",
+    "weights_not_reviewed": "Weights not reviewed (composite score hidden)",
+    "hard_constraint_failed": "Hard constraint violated",
+    "hard_constraint_passed": "Hard constraint satisfied"
+  },
+  "action_bar": {
+    "approve": "Approve",
+    "approve_with_conditions": "Approve with conditions",
+    "reject": "Reject",
+    "request_more_evidence": "Request more evidence",
+    "readonly_non_approver": "Read-only: Your current role is not authorized to approve this workflow.",
+    "divergence_dialog_title": "Confirm Action More Permissive Than Ceiling",
+    "divergence_dialog_body": "Your selected action is more permissive than the applied gate ceiling. Please enter a mandatory rationale before submitting.",
+    "rationale_label": "Rationale (mandatory)",
+    "conditions_editor_title": "Structured Conditions (required for Approve with conditions)",
+    "questions_editor_title": "Evidence Questions to Gather (required for Request more evidence)",
+    "stale_409_banner": "The recommendation has changed. View refreshed while preserving your typed rationale.",
+    "resume_pending_202": "Approval recorded, resuming graph (approval_recorded_resume_pending)"
+  },
+  "outcomes": {
+    "stage1_title": "Stage 1: Outcome Review (Deterministic Actual vs Predicted Comparison)",
+    "stage2_title": "Stage 2: Knowledge Steward Lesson Write-Back",
+    "steward_disabled_not_saved": "Write-back is unavailable until Stage 1 outcome review is saved.",
+    "steward_disabled_wrong_role": "Write-back requires the knowledge_steward role.",
+    "steward_disabled_same_person": "Separation of duties (WRITEBACK_REQUIRES_DIFFERENT_PERSON): the outcome reviewer cannot approve their own lesson write-back.",
+    "mt_notice": "Includes machine-translated draft text. Confirm both Japanese and English versions before submitting.",
+    "confirm_ja_checkbox": "I have reviewed and confirmed the Japanese lesson text",
+    "confirm_en_checkbox": "I have reviewed and confirmed the English lesson text",
+    "what_will_be_written_title": "What Will Be Written (Final Preview)",
+    "past_lesson_disclaimer": "Future decisions will be able to retrieve this as a past-decision lesson, not as verified fact.",
+    "deprecate_lesson_button": "Deprecate lesson",
+    "not_enough_data_stats": "Not enough data to display calibration statistics"
+  },
+  "mock_banner": {
+    "label": "デモデータ / Demo data (NEXT_PUBLIC_USE_MOCKS=true)"
+  },
+  "sse": {
+    "connected": "Live stream connected",
+    "reconnecting": "Reconnecting...",
+    "polling_fallback": "Switched to polling sync"
+  },
+  "errors": {
+    "missing_config": "Required environment variable or setting is missing: {variable}",
+    "unauthorized": "Authentication credentials are invalid or insufficient.",
+    "tenant_mismatch": "Cross-tenant access was denied.",
+    "rate_limit_exceeded": "Rate limit exceeded. Please retry after {retry_after} seconds.",
+    "insufficient_evidence": "Insufficient evidence to finalize a recommendation.",
+    "guardrail_blocked": "Request was blocked by guardrail policy ({policy}).",
+    "internal_error": "An internal system error occurred (Trace ID: {trace_id})."
+  }
+}

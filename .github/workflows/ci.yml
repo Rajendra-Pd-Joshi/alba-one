@@ -1,0 +1,104 @@
+name: ALBA ONE CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  secret-scan:
+    name: Secret Scan (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  lint-typecheck-test:
+    name: Lint, Type-Check, Unit & Contract Tests (Python 3.12)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.4.20"
+          enable-cache: true
+
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync --all-packages --extra dev
+
+      - name: Run Ruff linter & formatter check
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+
+      - name: Run Mypy type-checker
+        run: uv run mypy apps/api/src
+
+      - name: Run unit, contract, and safety meta-tests
+        env:
+          APP_ENV: test
+          AUTH_STUB_ENABLED: "true"
+          MAIN_MODEL: gpt-4o-2024-08-06
+          JUDGE_MODEL: gpt-4o-2024-08-06
+          EVAL_JUDGE_MODEL: claude-3-5-sonnet-20241022
+          EMBEDDING_MODEL: text-embedding-3-large
+          EMBEDDING_DIMENSIONS: "1536"
+          RERANK_PROVIDER: cohere_direct
+          RERANK_MODEL: rerank-v4.0-pro
+          GATEWAY_PROVIDER: portkey
+          GATEWAY_BASE_URL: https://api.portkey.ai/v1
+          GATEWAY_API_KEY: test-gateway-key
+          OPENAI_API_KEY: test-openai-key
+          PINECONE_API_KEY: test-pinecone-key
+          PINECONE_INDEX_NAME: alba-one-kb
+          COHERE_API_KEY: test-cohere-key
+          REDIS_URL: redis://localhost:6379/0
+          DATABASE_URL: postgresql+psycopg://alba:alba@localhost:5432/alba_one
+          AWS_REGION: ap-northeast-1
+          BEDROCK_GUARDRAIL_ID: gr-test123456
+          BEDROCK_GUARDRAIL_VERSION: "1"
+          LANGSMITH_API_KEY: test-langsmith-key
+          MEM0_API_KEY: test-mem0-key
+        run: uv run pytest apps/api/tests/unit apps/api/tests/mcp -v
+
+  image-hardening-and-scan:
+    name: Container Hardening & Trivy Scan
+    runs-on: ubuntu-latest
+    needs: [secret-scan, lint-typecheck-test]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Static Dockerfile & .dockerignore audit
+        run: bash ci/scripts/check_images.sh
+
+      - name: Build API, Worker, and Web images
+        run: |
+          docker build --target api -t alba-one/api:ci -f apps/api/Dockerfile .
+          docker build --target worker -t alba-one/worker:ci -f apps/api/Dockerfile .
+          docker build -t alba-one/web:ci -f apps/web/Dockerfile .
+
+      - name: Verify non-root, read-only start & absence of secrets in built images
+        run: bash ci/scripts/check_images.sh alba-one/api:ci alba-one/worker:ci alba-one/web:ci
+
+      - name: Run Trivy vulnerability scanner on built images
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: "alba-one/api:ci"
+          format: "table"
+          exit-code: "1"
+          ignore-unfixed: true
+          severity: "CRITICAL,HIGH"

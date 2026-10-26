@@ -1,0 +1,53 @@
+workflow: "delivery_planning"
+weights_reviewed_by: "TODO(owner): Logistics Director must review before composite scoring is enabled"
+criteria:
+  - id: "sla_breach_probability"
+    name_ja: "定温SLA超過確率"
+    name_en: "Cold-Chain SLA Breach Probability"
+    unit: "probability"
+    direction: "lower_better"
+    kind: "hard_constraint"
+    required: true
+    hard_limit: 0.35
+    source:
+      source_id: "delivery_planning.calculate_sla_breach_probability"
+      locator: "value"
+    weight: 0.40
+
+  - id: "route_cost_jpy"
+    name_ja: "配送ルート総費用（円）"
+    name_en: "Total Route Cost (JPY)"
+    unit: "JPY"
+    direction: "lower_better"
+    kind: "soft_criterion"
+    required: true
+    source:
+      source_id: "delivery_planning.calculate_route_cost_jpy"
+      locator: "value"
+    weight: 0.25
+
+  - id: "article36_overtime_margin"
+    name_ja: "36協定残業上限余裕時間"
+    name_en: "Article 36 Monthly Overtime Margin"
+    unit: "hours/month"
+    direction: "higher_better"
+    kind: "hard_constraint"
+    required: true
+    hard_limit: 0.0
+    is_regulatory_or_safety: true
+    source:
+      source_id: "staffing.calculate_overtime_margin"
+      locator: "value"
+    weight: 0.25
+
+  - id: "reversibility"
+    name_ja: "判断の可逆性（切替容易性）"
+    name_en: "Operational Reversibility"
+    unit: "qualitative"
+    direction: "n/a"
+    kind: "soft_criterion"
+    required: false
+    source:
+      source_id: "qualitative"
+      locator: "reversibility"
+    weight: 0.10

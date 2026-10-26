@@ -1,0 +1,20 @@
+[
+  {
+    "title": "東京港・横浜港の港湾気象警報および強風時ガントリークレーン基準（公開情報）",
+    "snippet": "東京湾沿岸における強風注意報・警報発令時、多くのコンテナターミナルでは瞬間風速15m/s〜20m/sを荷役一時停止の目安として運用しています。",
+    "url": "https://weather.example.jp/tokyo-bay-crane-wind-guideline",
+    "published_at": "2026-10-20T09:00:00Z",
+    "source_domain": "weather.example.jp",
+    "retrieved_at": "2026-10-24T06:00:00Z",
+    "provider": "fake"
+  },
+  {
+    "title": "海運・港湾ETA予測AIモデルの最新公開ベンチマーク動向 2026",
+    "snippet": "2026年第3四半期の海運ETA予測リーダーボードでは、港湾バース混雑特徴量を統合したモデルが平均nDCG@10で0.87〜0.89を達成しています。",
+    "url": "https://huggingface.co/spaces/maritime-ai/eta-leaderboard-2026",
+    "published_at": "2026-10-15T12:00:00Z",
+    "source_domain": "huggingface.co",
+    "retrieved_at": "2026-10-24T06:00:00Z",
+    "provider": "fake"
+  }
+]

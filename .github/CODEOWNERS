@@ -1,0 +1,13 @@
+# ==============================================================================
+# ALBA ONE — Security & Red-Team CODEOWNERS (`.github/CODEOWNERS`)
+# Control 3 (Phase 11): Changes to Rules of Engagement, allowed targets,
+# quarantine list, baselines, and red-team/CD workflows require security-owner review.
+# ==============================================================================
+/redteam/ROE.md                                    @albaconnect/security-owners
+/redteam/allowed_targets.yaml                      @albaconnect/security-owners
+/redteam/quarantine.yaml                           @albaconnect/security-owners
+/redteam/corpus/                                   @albaconnect/security-owners
+/.github/workflows/redteam-scheduled.yml           @albaconnect/security-owners
+/.github/workflows/redteam-breakglass-prod.yml     @albaconnect/security-owners
+/.github/workflows/cd.yml                          @albaconnect/security-owners
+/deploy/security/                                  @albaconnect/security-owners

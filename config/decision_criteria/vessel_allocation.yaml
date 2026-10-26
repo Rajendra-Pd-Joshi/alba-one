@@ -1,0 +1,42 @@
+workflow: "vessel_allocation"
+weights_reviewed_by: "TODO(owner): Port Captain & Maritime Director must review before composite scoring is enabled"
+criteria:
+  - id: "berth_ukc_margin_m"
+    name_ja: "バース最小余裕水深（UKC）マージン"
+    name_en: "Berth Under-Keel Clearance (UKC) Margin"
+    unit: "meters"
+    direction: "higher_better"
+    kind: "hard_constraint"
+    required: true
+    hard_limit: 0.0
+    is_regulatory_or_safety: true
+    source:
+      source_id: "vessel_allocation.calculate_berth_ukc_margin"
+      locator: "value"
+    weight: 0.45
+
+  - id: "port_gust_wind_speed_ms"
+    name_ja: "港湾最大瞬間風速"
+    name_en: "Port Gust Wind Speed"
+    unit: "m/s"
+    direction: "lower_better"
+    kind: "hard_constraint"
+    required: true
+    hard_limit: 15.0
+    is_regulatory_or_safety: true
+    source:
+      source_id: "weather_marine.get_port_weather"
+      locator: "gust_wind_speed_ms"
+    weight: 0.35
+
+  - id: "route_cost_jpy"
+    name_ja: "内陸接続配送費用（円）"
+    name_en: "Inland Connection Route Cost (JPY)"
+    unit: "JPY"
+    direction: "lower_better"
+    kind: "soft_criterion"
+    required: false
+    source:
+      source_id: "delivery_planning.calculate_route_cost_jpy"
+      locator: "value"
+    weight: 0.20

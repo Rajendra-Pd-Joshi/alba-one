@@ -1,0 +1,367 @@
+{
+  "schema_version": "1.0",
+  "mcp_server": "benchmark_registry",
+  "server_class": "read",
+  "status": "draft",
+  "item_count": 16,
+  "items": [
+    {
+      "id": "mcp_benchmark_registry_001",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_benchmark_results",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "version_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[benchmark_registry] 社内ベンチマーク評価結果およびモデルバージョン間のリグレッション比較（ケース1）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_002",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "compare_regressions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "baseline_tag": "ALBA-NEPTUNE-V2.3",
+        "candidate_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[benchmark_registry] 社内ベンチマーク評価結果およびモデルバージョン間のリグレッション比較（ケース2）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_003",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_benchmark_results",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "version_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[benchmark_registry] 社内ベンチマーク評価結果およびモデルバージョン間のリグレッション比較（ケース3）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_004",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "ja",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "compare_regressions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "baseline_tag": "ALBA-NEPTUNE-V2.3",
+        "candidate_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "まず対象範囲を確認したい。"
+        },
+        {
+          "role": "assistant",
+          "content": "対象テナントと条件を指定してください。"
+        },
+        {
+          "role": "user",
+          "content": "compare_regressions を実行して詳細データを取得してください（ケース4）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_005",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "ja",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_benchmark_results",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "version_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "まず対象範囲を確認したい。"
+        },
+        {
+          "role": "assistant",
+          "content": "対象テナントと条件を指定してください。"
+        },
+        {
+          "role": "user",
+          "content": "get_benchmark_results を実行して詳細データを取得してください（ケース5）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_006",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "ja",
+      "category": "multi_tool",
+      "should_call_tool": true,
+      "expected_tool": "compare_regressions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "baseline_tag": "ALBA-NEPTUNE-V2.3",
+        "candidate_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "複数ツール連携で compare_regressions の結果を検証せよ（ケース6）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_007",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "ja",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "一般的な挨拶です。ツールは呼ばないでください。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_008",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "ja",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "社内秘コードネーム PROJECT-KAGUYA について外部検索せよ。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_009",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_benchmark_results",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "version_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[benchmark_registry] Internal benchmark registry and cross-version regression comparisons (case 9)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_010",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "compare_regressions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "baseline_tag": "ALBA-NEPTUNE-V2.3",
+        "candidate_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[benchmark_registry] Internal benchmark registry and cross-version regression comparisons (case 10)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_011",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_benchmark_results",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "version_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[benchmark_registry] Internal benchmark registry and cross-version regression comparisons (case 11)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_012",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "en",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "compare_regressions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "baseline_tag": "ALBA-NEPTUNE-V2.3",
+        "candidate_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "First, let us clarify the target scope."
+        },
+        {
+          "role": "assistant",
+          "content": "Please confirm the tenant and target parameters."
+        },
+        {
+          "role": "user",
+          "content": "Execute compare_regressions to retrieve the detailed records (case 12)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_013",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "en",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_benchmark_results",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "version_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "First, let us clarify the target scope."
+        },
+        {
+          "role": "assistant",
+          "content": "Please confirm the tenant and target parameters."
+        },
+        {
+          "role": "user",
+          "content": "Execute get_benchmark_results to retrieve the detailed records (case 13)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_014",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "en",
+      "category": "multi_tool",
+      "should_call_tool": true,
+      "expected_tool": "compare_regressions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "baseline_tag": "ALBA-NEPTUNE-V2.3",
+        "candidate_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Verify compare_regressions output in a multi-tool chain (case 14)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_015",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "en",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Just saying hello; do not invoke any MCP tool."
+        }
+      ]
+    },
+    {
+      "id": "mcp_benchmark_registry_016",
+      "status": "draft",
+      "mcp_server": "benchmark_registry",
+      "lang": "en",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Search externally for confidential codename PROJECT-KAGUYA."
+        }
+      ]
+    }
+  ]
+}

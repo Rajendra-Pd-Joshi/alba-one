@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Tokyo Bay Port Terminal Wind Advisory & Crane Operation Thresholds",
+    "snippet": "Container terminals in Tokyo and Yokohama ports typically suspend gantry crane operations when gust wind speeds exceed 15.0 to 20.0 m/s.",
+    "url": "https://weather.example.jp/en/tokyo-bay-wind-advisory",
+    "published_at": "2026-10-20T09:00:00Z",
+    "source_domain": "weather.example.jp",
+    "retrieved_at": "2026-10-24T06:00:00Z",
+    "provider": "fake"
+  },
+  {
+    "title": "2026 Maritime ETA Forecasting Public Leaderboard & Open Benchmarks",
+    "snippet": "Public maritime ETA forecasting models incorporating berth congestion features report nDCG@10 scores between 0.87 and 0.89 on standard port datasets.",
+    "url": "https://huggingface.co/spaces/maritime-ai/eta-leaderboard-2026",
+    "published_at": "2026-10-15T12:00:00Z",
+    "source_domain": "huggingface.co",
+    "retrieved_at": "2026-10-24T06:00:00Z",
+    "provider": "fake"
+  }
+]

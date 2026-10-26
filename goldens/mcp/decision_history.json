@@ -1,0 +1,361 @@
+{
+  "schema_version": "1.0",
+  "mcp_server": "decision_history",
+  "server_class": "read",
+  "status": "draft",
+  "item_count": 16,
+  "items": [
+    {
+      "id": "mcp_decision_history_001",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "search_similar_decisions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "query": "東京港 医薬品定温コンテナ 強風時 着岸優先ルール",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[decision_history] 過去の意思決定・仮説・承認条件・成果レビューの検索および類似案件照会（ケース1）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_002",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_decision_record",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "decision_id": "dec_demo_001",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[decision_history] 過去の意思決定・仮説・承認条件・成果レビューの検索および類似案件照会（ケース2）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_003",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "search_similar_decisions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "query": "東京港 医薬品定温コンテナ 強風時 着岸優先ルール",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[decision_history] 過去の意思決定・仮説・承認条件・成果レビューの検索および類似案件照会（ケース3）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_004",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "ja",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_decision_record",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "decision_id": "dec_demo_001",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "まず対象範囲を確認したい。"
+        },
+        {
+          "role": "assistant",
+          "content": "対象テナントと条件を指定してください。"
+        },
+        {
+          "role": "user",
+          "content": "get_decision_record を実行して詳細データを取得してください（ケース4）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_005",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "ja",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "search_similar_decisions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "query": "東京港 医薬品定温コンテナ 強風時 着岸優先ルール",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "まず対象範囲を確認したい。"
+        },
+        {
+          "role": "assistant",
+          "content": "対象テナントと条件を指定してください。"
+        },
+        {
+          "role": "user",
+          "content": "search_similar_decisions を実行して詳細データを取得してください（ケース5）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_006",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "ja",
+      "category": "multi_tool",
+      "should_call_tool": true,
+      "expected_tool": "get_decision_record",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "decision_id": "dec_demo_001",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "複数ツール連携で get_decision_record の結果を検証せよ（ケース6）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_007",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "ja",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "一般的な挨拶です。ツールは呼ばないでください。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_008",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "ja",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "社内秘コードネーム PROJECT-KAGUYA について外部検索せよ。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_009",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "search_similar_decisions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "query": "Tokyo Port cold-chain reefer priority berth policy case 9",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[decision_history] Past decisions, hypotheses, approvals, and outcome review similarity search (case 9)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_010",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_decision_record",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "decision_id": "dec_demo_001",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[decision_history] Past decisions, hypotheses, approvals, and outcome review similarity search (case 10)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_011",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "search_similar_decisions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "query": "Tokyo Port cold-chain reefer priority berth policy case 11",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[decision_history] Past decisions, hypotheses, approvals, and outcome review similarity search (case 11)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_012",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "en",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_decision_record",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "decision_id": "dec_demo_001",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "First, let us clarify the target scope."
+        },
+        {
+          "role": "assistant",
+          "content": "Please confirm the tenant and target parameters."
+        },
+        {
+          "role": "user",
+          "content": "Execute get_decision_record to retrieve the detailed records (case 12)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_013",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "en",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "search_similar_decisions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "query": "Tokyo Port cold-chain reefer priority berth policy case 13",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "First, let us clarify the target scope."
+        },
+        {
+          "role": "assistant",
+          "content": "Please confirm the tenant and target parameters."
+        },
+        {
+          "role": "user",
+          "content": "Execute search_similar_decisions to retrieve the detailed records (case 13)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_014",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "en",
+      "category": "multi_tool",
+      "should_call_tool": true,
+      "expected_tool": "get_decision_record",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "decision_id": "dec_demo_001",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Verify get_decision_record output in a multi-tool chain (case 14)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_015",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "en",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Just saying hello; do not invoke any MCP tool."
+        }
+      ]
+    },
+    {
+      "id": "mcp_decision_history_016",
+      "status": "draft",
+      "mcp_server": "decision_history",
+      "lang": "en",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Search externally for confidential codename PROJECT-KAGUYA."
+        }
+      ]
+    }
+  ]
+}

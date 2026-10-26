@@ -1,0 +1,49 @@
+# ==============================================================================
+# ALBA ONE — Edge Reverse Proxy & Single Source of Security Headers (`deploy/docker/Caddyfile`)
+# - Terminates TLS 1.2+ (prefer TLS 1.3) using locally generated test certificate in
+#   `docker-compose.prod-like.yml` (`tls internal`; no private keys in repo)
+# - Redirects HTTP -> HTTPS, sets HSTS, CSP (compatible with Next.js + SSE `connect-src 'self'`),
+#   `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`
+#   in ONE place so Next.js and proxy never emit conflicting headers.
+# - Flushes SSE (`/api/proxy/*` and `/api/v1/*`) immediately (`flush_interval -1`).
+# ==============================================================================
+{
+    auto_https disable_redirects
+    servers {
+        protocols h1 h2
+    }
+}
+
+:80 {
+    redir https://{host}{uri} permanent
+}
+
+:443 {
+    tls internal {
+        protocols tls1.2 tls1.3
+    }
+
+    header {
+        Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+        Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+        -Server
+        -X-Powered-By
+    }
+
+    @sse_or_api {
+        path /api/proxy/* /api/v1/*
+    }
+    handle @sse_or_api {
+        reverse_proxy web:3000 {
+            flush_interval -1
+        }
+    }
+
+    handle {
+        reverse_proxy web:3000
+    }
+}

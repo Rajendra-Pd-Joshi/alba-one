@@ -1,0 +1,9 @@
+apiVersion: v2
+name: alba-one
+description: ALBA ONE (意思決定OS) Enterprise Decision OS Helm Chart (ALBACONNECT Inc.)
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+maintainers:
+  - name: ALBACONNECT Platform Security & SRE
+    url: https://albaconnect.co.jp/

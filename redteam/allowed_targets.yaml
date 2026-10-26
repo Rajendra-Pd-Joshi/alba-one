@@ -1,0 +1,100 @@
+# ==============================================================================
+# ALBA ONE — Red-Team Harness Safety Rails & 4-Control Isolation
+# (`redteam/allowed_targets.yaml` — Phase 9 & Phase 11)
+#
+# Protected by `.github/CODEOWNERS` (@albaconnect/security-owners).
+# - Control 1: Refuses any target not listed in `targets`.
+# - Control 2: Verifies target's self-reported `app_env` and synthetic tenant IDs
+#   before sending any adversarial payload.
+# - Control 4: Production break-glass requires `allow_production: true` AND
+#   `REDTEAM_PROD_ENABLED=1` AND `--production-authorised` AND active time window.
+# ==============================================================================
+
+schema_version: "2.0"
+synthetic_tenants_only: true
+allowed_tenant_prefixes:
+  - "tenant_fictional_"
+  - "tenant_alba_demo"
+
+allow_production_default: false
+
+targets:
+  in_process_safe:
+    url: "in_process://safe"
+    environment: "local"
+    allow_production: false
+    allowed_tenants:
+      - "tenant_fictional_alpha"
+      - "tenant_fictional_other"
+  in_process_vulnerable:
+    url: "in_process://vulnerable"
+    environment: "local"
+    allow_production: false
+    allowed_tenants:
+      - "tenant_fictional_alpha"
+      - "tenant_fictional_other"
+  http://localhost:8000:
+    url: "http://localhost:8000"
+    environment: "local"
+    allow_production: false
+    allowed_tenants:
+      - "tenant_fictional_alpha"
+  http://127.0.0.1:8000:
+    url: "http://127.0.0.1:8000"
+    environment: "local"
+    allow_production: false
+    allowed_tenants:
+      - "tenant_fictional_alpha"
+  http://api:8000:
+    url: "http://api:8000"
+    environment: "staging"
+    allow_production: false
+    allowed_tenants:
+      - "tenant_fictional_alpha"
+  https://staging.alba-one.albaconnect.co.jp:
+    url: "https://staging.alba-one.albaconnect.co.jp"
+    environment: "staging"
+    allow_production: false
+    allowed_tenants:
+      - "tenant_fictional_alpha"
+      - "tenant_fictional_other"
+  https://alba-one.albaconnect.co.jp:
+    url: "https://alba-one.albaconnect.co.jp"
+    environment: "production"
+    # Default false; break-glass workflow_dispatch requires explicit authorization
+    allow_production: false
+    allowed_tenants:
+      - "tenant_fictional_canary"
+
+# Backwards-compatible flat list for Phase 9 callers
+allowed_targets:
+  - "in_process_safe"
+  - "in_process_vulnerable"
+  - "http://localhost:8000"
+  - "http://127.0.0.1:8000"
+  - "http://api:8000"
+  - "https://staging.alba-one.albaconnect.co.jp"
+  - "https://alba-one.albaconnect.co.jp"
+
+allowed_breakglass_scopes:
+  - "guardrail_heartbeat"
+  - "benign_smoke"
+  - "canary_injection_readonly"
+
+budgets:
+  max_cost_usd_per_run: 1.00
+  max_tokens_per_run: 250000
+  max_requests_per_minute: 120
+  max_run_duration_seconds: 900
+  max_target_error_rate: 0.10
+  max_target_latency_ms: 15000.0
+  default_repeats: 3
+  kill_switch_env: "REDTEAM_KILL_SWITCH"
+  dead_man_switch_max_age_seconds: 86400
+
+containment:
+  # Default "recommend"; "degraded_mode" requires owner sign-off below
+  mode: "recommend"
+  degraded_mode_approved_by: "TODO(owner)"
+  min_samples_for_fp_wilson: 10 # TODO(owner): calibrate from production benign volume
+  max_false_positive_rate_threshold: 0.05 # TODO(owner)

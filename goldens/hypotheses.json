@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0",
+  "status": "draft",
+  "description": "Bilingual JP/EN golden dataset for Phase 6 Hypothesis Generation (status='draft'; requires --allow-draft until reviewed by domain owners).",
+  "items": [
+    {
+      "id": "hyp_ja_001",
+      "status": "draft",
+      "lang": "ja",
+      "question": "モデルv2.4（ALBA-NEPTUNE-V2.4）を本番カナリア環境へリリースすべきか？",
+      "workflow": "model_release",
+      "expected_min_hypotheses": 3,
+      "require_baseline": true,
+      "require_counter_evidence": true
+    },
+    {
+      "id": "hyp_ja_002",
+      "status": "draft",
+      "lang": "ja",
+      "question": "横浜港の強風警報時に医薬品定温コンテナを東京港B3バースへ優先着岸させるべきか？",
+      "workflow": "vessel_allocation",
+      "expected_min_hypotheses": 3,
+      "require_baseline": true,
+      "require_counter_evidence": true
+    },
+    {
+      "id": "hyp_ja_003",
+      "status": "draft",
+      "lang": "ja",
+      "question": "東京〜名古屋間の定温配送ルートでSLA（6時間）超過リスクを抑えるため直行便を手配すべきか？",
+      "workflow": "delivery_planning",
+      "expected_min_hypotheses": 3,
+      "require_baseline": true,
+      "require_counter_evidence": true
+    },
+    {
+      "id": "hyp_ja_004",
+      "status": "draft",
+      "lang": "ja",
+      "question": "港湾荷役要員の夜間シフトを4時間延長して定温コンテナ荷役を完了させるべきか？",
+      "workflow": "staffing",
+      "expected_min_hypotheses": 3,
+      "require_baseline": true,
+      "require_counter_evidence": true
+    },
+    {
+      "id": "hyp_ja_005",
+      "status": "draft",
+      "lang": "ja",
+      "question": "次世代ルーティングモデルv2.4の推論レイテンシ改善と分布外リスクをどう判断すべきか？",
+      "workflow": "model_release",
+      "expected_min_hypotheses": 3,
+      "require_baseline": true,
+      "require_counter_evidence": true
+    },
+    {
+      "id": "hyp_ja_006",
+      "status": "draft",
+      "lang": "ja",
+      "question": "台風接近に伴う名古屋バイパス経由の代替定温輸送プランを発動すべきか？",
+      "workflow": "delivery_planning",
+      "expected_min_hypotheses": 3,
+      "require_baseline": true,
+      "require_counter_evidence": true
+    },
+    {
+      "id": "hyp_en_007",
+      "status": "draft",
+      "lang": "en",
+      "question": "Should we release model v2.4 to production canary traffic now?",
+      "workflow": "model_release",
+      "expected_min_hypotheses": 3,
+      "require_baseline": true,
+      "require_counter_evidence": true
+    },
+    {
+      "id": "hyp_en_008",
+      "status": "draft",
+      "lang": "en",
+      "question": "Should we allocate priority berth TYO-B3 and refrigerated dispatch for pharma cold-chain cargo during Yokohama wind advisories?",
+      "workflow": "vessel_allocation",
+      "expected_min_hypotheses": 3,
+      "require_baseline": true,
+      "require_counter_evidence": true
+    },
+    {
+      "id": "hyp_en_009",
+      "status": "draft",
+      "lang": "en",
+      "question": "Should we dispatch a direct cold-chain truck on the Tokyo-Nagoya route to keep SLA breach risk within limits?",
+      "workflow": "delivery_planning",
+      "expected_min_hypotheses": 3,
+      "require_baseline": true,
+      "require_counter_evidence": true
+    },
+    {
+      "id": "hyp_en_010",
+      "status": "draft",
+      "lang": "en",
+      "question": "Should we extend port stevedore shift hours by 4 hours tonight under Article 36 overtime rules?",
+      "workflow": "staffing",
+      "expected_min_hypotheses": 3,
+      "require_baseline": true,
+      "require_counter_evidence": true
+    },
+    {
+      "id": "hyp_en_011",
+      "status": "draft",
+      "lang": "en",
+      "question": "Should we promote ALBA-NEPTUNE-V2.4 based on the 5-run latency delta or run extended shadow evaluation first?",
+      "workflow": "model_release",
+      "expected_min_hypotheses": 3,
+      "require_baseline": true,
+      "require_counter_evidence": true
+    },
+    {
+      "id": "hyp_en_012",
+      "status": "draft",
+      "lang": "en",
+      "question": "Should we reroute Yokohama cold-chain containers via the Nagoya bypass if wind gusts approach crane suspension limits?",
+      "workflow": "delivery_planning",
+      "expected_min_hypotheses": 3,
+      "require_baseline": true,
+      "require_counter_evidence": true
+    }
+  ]
+}

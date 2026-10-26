@@ -1,0 +1,69 @@
+# ==============================================================================
+# ALBA ONE — Production Break-Glass Safe Probe Workflow
+# (`.github/workflows/redteam-breakglass-prod.yml` — Phase 11)
+#
+# Protected by `.github/CODEOWNERS` (@albaconnect/security-owners).
+# Requires:
+# 1. Manual `workflow_dispatch` with `justification`, `ticket_id`,
+#    `time_window_minutes`, and `scope` (enum of production-safe probe sets).
+# 2. Required reviewer approval on the `production-probe` GitHub Environment
+#    (read-only credentials bound strictly to `tenant_fictional_canary`).
+# 3. `REDTEAM_PROD_ENABLED=1` and `--production-authorised`.
+# 4. Filters scenario catalog strictly to `production_safe: true`.
+# ==============================================================================
+name: ALBA ONE Production Break-Glass Safe Probe
+
+on:
+  workflow_dispatch:
+    inputs:
+      justification:
+        description: "Security/ISMS justification for running production-safe canary probe"
+        required: true
+        type: string
+      ticket_id:
+        description: "Approved change/incident ticket ID (e.g. ISMS-SEC-2026-042)"
+        required: true
+        type: string
+      time_window_minutes:
+        description: "Authorized execution window in minutes (max 60)"
+        required: true
+        default: "30"
+        type: string
+      scope:
+        description: "Allowed production-safe read-only probe scope"
+        required: true
+        default: "guardrail_heartbeat"
+        type: choice
+        options:
+          - guardrail_heartbeat
+          - benign_smoke
+          - canary_injection_readonly
+
+permissions:
+  contents: read
+
+concurrency:
+  group: redteam-production-breakglass
+  cancel-in-progress: false
+
+jobs:
+  breakglass-probe:
+    name: Production-Safe Canary Probe (Requires Reviewer Approval)
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: production-probe
+    steps:
+      - name: Checkout default branch
+        uses: actions/checkout@v4
+
+      - name: Execute production-safe probe within authorized window
+        env:
+          REDTEAM_PROD_ENABLED: "1"
+          BREAKGLASS_JUSTIFICATION: ${{ inputs.justification }}
+          BREAKGLASS_TICKET_ID: ${{ inputs.ticket_id }}
+          BREAKGLASS_WINDOW_MINUTES: ${{ inputs.time_window_minutes }}
+          BREAKGLASS_SCOPE: ${{ inputs.scope }}
+          BREAKGLASS_ACTOR: ${{ github.actor }}
+        run: |
+          PYTHONPATH="apps/api/src:." python3 -m redteam.runner --target in_process_safe --repeats 1 --production-authorised

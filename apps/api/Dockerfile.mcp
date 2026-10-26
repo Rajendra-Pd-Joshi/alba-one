@@ -1,0 +1,83 @@
+# syntax=docker/dockerfile:1.7
+# ==============================================================================
+# ALBA ONE — Hardened Parameterized Per-Server MCP Dockerfile (`apps/api/Dockerfile.mcp`)
+# Builds an isolated, least-privilege image for a single MCP server (`ARG MCP_SERVER`)
+# installing ONLY that server's extra (`--extra ${MCP_EXTRA}`) on top of the shared base.
+# - Multi-stage (`builder` -> `runtime`), base images pinned by digest
+# - Numeric non-root `USER 10001:10001`, fixed `HOME=/home/alba`, `PYTHONDONTWRITEBYTECODE=1`
+# - Package managers removed from final stage; exec-form ENTRYPOINT (no shell wrapper)
+# ==============================================================================
+ARG UV_BASE_IMAGE=ghcr.io/astral-sh/uv:0.4.20-python3.12-bookworm-slim@sha256:5271df9a2be4bf27f5bc1eebaa91e2dc26a9c6fb89d0c1c05f1fd450200b776c
+ARG PYTHON_RUNTIME_IMAGE=python:3.12.7-slim-bookworm@sha256:9c8d94d78f907a9c85662d13d92298a196a35e9d91a5d9a16f71b7c3481a928f
+
+FROM ${UV_BASE_IMAGE} AS builder
+ARG MCP_SERVER=knowledge_base
+ARG MCP_EXTRA=mcp-knowledge-base
+
+WORKDIR /build
+ENV UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    PYTHONDONTWRITEBYTECODE=1
+
+COPY pyproject.toml /build/pyproject.toml
+COPY apps/api/pyproject.toml /build/apps/api/pyproject.toml
+COPY apps/api/src/alba_one/__init__.py /build/apps/api/src/alba_one/__init__.py
+COPY apps/api/src/alba_one/core /build/apps/api/src/alba_one/core
+COPY apps/api/src/alba_one/schemas /build/apps/api/src/alba_one/schemas
+COPY apps/api/src/alba_one/guardrails /build/apps/api/src/alba_one/guardrails
+COPY apps/api/src/alba_one/kb /build/apps/api/src/alba_one/kb
+COPY apps/api/src/alba_one/memory /build/apps/api/src/alba_one/memory
+COPY apps/api/src/alba_one/mcp_client /build/apps/api/src/alba_one/mcp_client
+COPY apps/api/src/alba_one/mcp_servers/__init__.py /build/apps/api/src/alba_one/mcp_servers/__init__.py
+COPY apps/api/src/alba_one/mcp_servers/base.py /build/apps/api/src/alba_one/mcp_servers/base.py
+COPY apps/api/src/alba_one/mcp_servers/calculators_base.py /build/apps/api/src/alba_one/mcp_servers/calculators_base.py
+COPY apps/api/src/alba_one/mcp_servers/domain_handlers.py /build/apps/api/src/alba_one/mcp_servers/domain_handlers.py
+COPY apps/api/src/alba_one/mcp_servers/calculator_handlers.py /build/apps/api/src/alba_one/mcp_servers/calculator_handlers.py
+COPY apps/api/src/alba_one/mcp_servers/handlers.py /build/apps/api/src/alba_one/mcp_servers/handlers.py
+COPY apps/api/src/alba_one/mcp_servers/registry.yaml /build/apps/api/src/alba_one/mcp_servers/registry.yaml
+COPY apps/api/src/alba_one/mcp_servers/${MCP_SERVER} /build/apps/api/src/alba_one/mcp_servers/${MCP_SERVER}
+
+RUN --mount=type=secret,id=pip_index_url,required=false \
+    uv venv /opt/venv && \
+    uv pip install --python /opt/venv/bin/python --no-cache "/build/apps/api[${MCP_EXTRA}]"
+
+FROM ${PYTHON_RUNTIME_IMAGE} AS runtime
+ARG MCP_SERVER=knowledge_base
+ARG APP_VERSION=1.0.0
+ARG GIT_COMMIT=unknown
+
+LABEL org.opencontainers.image.title="alba-one-mcp-${MCP_SERVER}" \
+      org.opencontainers.image.vendor="ALBACONNECT Inc." \
+      org.opencontainers.image.version="${APP_VERSION}" \
+      org.opencontainers.image.revision="${GIT_COMMIT}" \
+      org.opencontainers.image.source="https://github.com/albaconnect/alba-one"
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    HOME=/home/alba \
+    PATH="/opt/venv/bin:${PATH}" \
+    TZ=Asia/Tokyo \
+    TMPDIR=/tmp \
+    MCP_SERVER=${MCP_SERVER} \
+    MCP_TRANSPORT=streamable-http \
+    MCP_PORT=8100
+
+RUN groupadd --gid 10001 alba && \
+    useradd --uid 10001 --gid 10001 --create-home --home-dir /home/alba --shell /usr/sbin/nologin alba && \
+    mkdir -p /app && \
+    chown -R 10001:10001 /app /home/alba && \
+    rm -rf /var/lib/apt/lists/* /usr/bin/apt* /usr/bin/dpkg* /opt/venv/bin/pip*
+
+WORKDIR /app
+COPY --from=builder --chown=10001:10001 /opt/venv /opt/venv
+COPY --from=builder --chown=10001:10001 /build/apps/api/src /app/apps/api/src
+COPY --chown=10001:10001 config /app/config
+COPY --chown=10001:10001 i18n /app/i18n
+
+USER 10001:10001
+EXPOSE 8100
+
+HEALTHCHECK --interval=15s --timeout=5s --retries=3 \
+    CMD ["/opt/venv/bin/python", "-c", "import os, sys; assert os.getenv('MCP_SERVER'); sys.exit(0)"]
+
+ENTRYPOINT ["/opt/venv/bin/python", "-c", "import os, runpy; srv = os.environ['MCP_SERVER']; runpy.run_module(f'alba_one.mcp_servers.{srv}.server', run_name='__main__')"]

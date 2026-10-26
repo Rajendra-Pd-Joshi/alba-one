@@ -1,0 +1,360 @@
+{
+  "schema_version": "1.0",
+  "mcp_server": "experiment_tracking",
+  "server_class": "read",
+  "status": "draft",
+  "item_count": 16,
+  "items": [
+    {
+      "id": "mcp_experiment_tracking_001",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "list_experiments",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[experiment_tracking] MLflow互換の実験一覧・実行メトリクス・ラン比較・モデルバージョン・リリース準備状況照会（ケース1）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_002",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_run",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "experiment_id": "exp_neptune_v24",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[experiment_tracking] MLflow互換の実験一覧・実行メトリクス・ラン比較・モデルバージョン・リリース準備状況照会（ケース2）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_003",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "ja",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "compare_runs",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "baseline_id": "exp_neptune_v23",
+        "candidate_id": "exp_neptune_v24",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[experiment_tracking] MLflow互換の実験一覧・実行メトリクス・ラン比較・モデルバージョン・リリース準備状況照会（ケース3）"
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_004",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "ja",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_model_versions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "model_family": "alba-neptune",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "まず対象範囲を確認したい。"
+        },
+        {
+          "role": "assistant",
+          "content": "対象テナントと条件を指定してください。"
+        },
+        {
+          "role": "user",
+          "content": "get_model_versions を実行して詳細データを取得してください（ケース4）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_005",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "ja",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_release_readiness_summary",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "version_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "まず対象範囲を確認したい。"
+        },
+        {
+          "role": "assistant",
+          "content": "対象テナントと条件を指定してください。"
+        },
+        {
+          "role": "user",
+          "content": "get_release_readiness_summary を実行して詳細データを取得してください（ケース5）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_006",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "ja",
+      "category": "multi_tool",
+      "should_call_tool": true,
+      "expected_tool": "list_experiments",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "lang": "ja"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "複数ツール連携で list_experiments の結果を検証せよ（ケース6）。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_007",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "ja",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "一般的な挨拶です。ツールは呼ばないでください。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_008",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "ja",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "社内秘コードネーム PROJECT-KAGUYA について外部検索せよ。"
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_009",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_model_versions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "model_family": "alba-neptune",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[experiment_tracking] MLflow-compatible adapter for experiments, runs, comparisons, versions, and release readiness (case 9)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_010",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_release_readiness_summary",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "version_tag": "ALBA-NEPTUNE-V2.4",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[experiment_tracking] MLflow-compatible adapter for experiments, runs, comparisons, versions, and release readiness (case 10)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_011",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "en",
+      "category": "single_turn",
+      "should_call_tool": true,
+      "expected_tool": "list_experiments",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "[experiment_tracking] MLflow-compatible adapter for experiments, runs, comparisons, versions, and release readiness (case 11)"
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_012",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "en",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "get_run",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "experiment_id": "exp_neptune_v24",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "First, let us clarify the target scope."
+        },
+        {
+          "role": "assistant",
+          "content": "Please confirm the tenant and target parameters."
+        },
+        {
+          "role": "user",
+          "content": "Execute get_run to retrieve the detailed records (case 12)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_013",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "en",
+      "category": "multi_turn",
+      "should_call_tool": true,
+      "expected_tool": "compare_runs",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "baseline_id": "exp_neptune_v23",
+        "candidate_id": "exp_neptune_v24",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "First, let us clarify the target scope."
+        },
+        {
+          "role": "assistant",
+          "content": "Please confirm the tenant and target parameters."
+        },
+        {
+          "role": "user",
+          "content": "Execute compare_runs to retrieve the detailed records (case 13)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_014",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "en",
+      "category": "multi_tool",
+      "should_call_tool": true,
+      "expected_tool": "get_model_versions",
+      "expected_arguments": {
+        "tenant_id": "tenant_alba_demo",
+        "model_family": "alba-neptune",
+        "lang": "en"
+      },
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Verify get_model_versions output in a multi-tool chain (case 14)."
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_015",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "en",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Just saying hello; do not invoke any MCP tool."
+        }
+      ]
+    },
+    {
+      "id": "mcp_experiment_tracking_016",
+      "status": "draft",
+      "mcp_server": "experiment_tracking",
+      "lang": "en",
+      "category": "negative_no_tool",
+      "should_call_tool": false,
+      "expected_tool": null,
+      "expected_arguments": {},
+      "outbound_query_policy": "generalize",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Search externally for confidential codename PROJECT-KAGUYA."
+        }
+      ]
+    }
+  ]
+}

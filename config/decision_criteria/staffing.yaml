@@ -1,0 +1,41 @@
+workflow: "staffing"
+weights_reviewed_by: "TODO(owner): HR & Port Operations Director must review before composite scoring is enabled"
+criteria:
+  - id: "article36_overtime_margin"
+    name_ja: "36協定残業上限余裕時間"
+    name_en: "Article 36 Monthly Overtime Margin"
+    unit: "hours/month"
+    direction: "higher_better"
+    kind: "hard_constraint"
+    required: true
+    hard_limit: 0.0
+    is_regulatory_or_safety: true
+    source:
+      source_id: "staffing.calculate_overtime_margin"
+      locator: "value"
+    weight: 0.50
+
+  - id: "certified_operators_on_shift"
+    name_ja: "有資格保冷荷役要員数"
+    name_en: "Certified Cold-Chain Operators on Shift"
+    unit: "persons"
+    direction: "higher_better"
+    kind: "hard_constraint"
+    required: true
+    hard_limit: 4.0
+    source:
+      source_id: "staffing.analyze_staff_shifts"
+      locator: "certified_cold_chain_operators_on_shift"
+    weight: 0.30
+
+  - id: "reversibility"
+    name_ja: "シフト変更の可逆性"
+    name_en: "Shift Schedule Reversibility"
+    unit: "qualitative"
+    direction: "n/a"
+    kind: "soft_criterion"
+    required: false
+    source:
+      source_id: "qualitative"
+      locator: "reversibility"
+    weight: 0.20

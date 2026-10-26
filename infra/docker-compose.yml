@@ -1,0 +1,245 @@
+# ==============================================================================
+# ALBA ONE — Docker Compose (infra/docker-compose.yml)
+# Uses `x-mcp-service` YAML anchor and Compose profiles (`core`, `domain`, `external`, `all`)
+# so developers only launch the MCP servers they need:
+#   make mcp-up PROFILE=core
+# ==============================================================================
+
+x-mcp-service: &mcp-service
+  build:
+    context: ..
+    dockerfile: apps/api/Dockerfile.mcp
+  restart: unless-stopped
+  env_file:
+    - ../.env
+  read_only: true
+  tmpfs:
+    - /tmp
+  depends_on:
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: alba-one-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-alba}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-alba_dev_password}
+      POSTGRES_DB: ${POSTGRES_DB:-alba_one}
+      TZ: Asia/Tokyo
+    ports:
+      - "5432:5432"
+    volumes:
+      - alba_pg_data:/var/lib/postgresql/data
+      - ./seed:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-alba} -d $${POSTGRES_DB:-alba_one}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7.4-alpine
+    container_name: alba-one-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - alba_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile
+    container_name: alba-one-api
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    environment:
+      DATABASE_URL: postgresql+psycopg://alba:alba_dev_password@postgres:5432/alba_one
+      REDIS_URL: redis://redis:6379/0
+      MODEL_CONFIG_PATH: /app/config/models.yaml
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- Core Profile MCP Servers ---
+  mcp-knowledge_base:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: knowledge_base, MCP_EXTRA: mcp-knowledge-base } }
+    environment: { MCP_SERVER: knowledge_base, MCP_PORT: "8101" }
+    ports: ["8101:8101"]
+    profiles: ["core", "all"]
+
+  mcp-sql_readonly:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: sql_readonly, MCP_EXTRA: mcp-sql-readonly } }
+    environment: { MCP_SERVER: sql_readonly, MCP_PORT: "8102" }
+    ports: ["8102:8102"]
+    profiles: ["core", "all"]
+
+  mcp-departments:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: departments, MCP_EXTRA: mcp-departments } }
+    environment: { MCP_SERVER: departments, MCP_PORT: "8103" }
+    ports: ["8103:8103"]
+    profiles: ["core", "all"]
+
+  mcp-decision_history:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: decision_history, MCP_EXTRA: mcp-decision-history } }
+    environment: { MCP_SERVER: decision_history, MCP_PORT: "8107" }
+    ports: ["8107:8107"]
+    profiles: ["core", "all"]
+
+  mcp-memory:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: memory, MCP_EXTRA: mcp-memory } }
+    environment: { MCP_SERVER: memory, MCP_PORT: "8108" }
+    ports: ["8108:8108"]
+    profiles: ["core", "all"]
+
+  # --- Domain Profile MCP Servers ---
+  mcp-approvals:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: approvals, MCP_EXTRA: mcp-approvals } }
+    environment: { MCP_SERVER: approvals, MCP_PORT: "8104" }
+    ports: ["8104:8104"]
+    profiles: ["domain", "all"]
+
+  mcp-experiment_tracking:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: experiment_tracking, MCP_EXTRA: mcp-experiment-tracking } }
+    environment: { MCP_SERVER: experiment_tracking, MCP_PORT: "8105" }
+    ports: ["8105:8105"]
+    profiles: ["domain", "all"]
+
+  mcp-benchmark_registry:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: benchmark_registry, MCP_EXTRA: mcp-benchmark-registry } }
+    environment: { MCP_SERVER: benchmark_registry, MCP_PORT: "8106" }
+    ports: ["8106:8106"]
+    profiles: ["domain", "all"]
+
+  mcp-delivery_planning:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: delivery_planning, MCP_EXTRA: mcp-delivery-planning } }
+    environment: { MCP_SERVER: delivery_planning, MCP_PORT: "8109" }
+    ports: ["8109:8109"]
+    profiles: ["domain", "all"]
+
+  mcp-staffing:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: staffing, MCP_EXTRA: mcp-staffing } }
+    environment: { MCP_SERVER: staffing, MCP_PORT: "8110" }
+    ports: ["8110:8110"]
+    profiles: ["domain", "all"]
+
+  mcp-vessel_allocation:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: vessel_allocation, MCP_EXTRA: mcp-vessel-allocation } }
+    environment: { MCP_SERVER: vessel_allocation, MCP_PORT: "8111" }
+    ports: ["8111:8111"]
+    profiles: ["domain", "all"]
+
+  mcp-document_extraction:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: document_extraction, MCP_EXTRA: mcp-document-extraction } }
+    environment: { MCP_SERVER: document_extraction, MCP_PORT: "8112" }
+    ports: ["8112:8112"]
+    profiles: ["domain", "all"]
+
+  mcp-deployment_status:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: deployment_status, MCP_EXTRA: mcp-deployment-status } }
+    environment: { MCP_SERVER: deployment_status, MCP_PORT: "8113" }
+    ports: ["8113:8113"]
+    profiles: ["domain", "all"]
+
+  # --- External Profile MCP Servers ---
+  mcp-web_search:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: web_search, MCP_EXTRA: mcp-web-search } }
+    environment: { MCP_SERVER: web_search, MCP_PORT: "8114" }
+    ports: ["8114:8114"]
+    profiles: ["external", "all"]
+
+  mcp-news_search:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: news_search, MCP_EXTRA: mcp-news-search } }
+    environment: { MCP_SERVER: news_search, MCP_PORT: "8115" }
+    ports: ["8115:8115"]
+    profiles: ["external", "all"]
+
+  mcp-competitor_intel:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: competitor_intel, MCP_EXTRA: mcp-competitor-intel } }
+    environment: { MCP_SERVER: competitor_intel, MCP_PORT: "8116" }
+    ports: ["8116:8116"]
+    profiles: ["external", "all"]
+
+  mcp-model_benchmarks:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: model_benchmarks, MCP_EXTRA: mcp-model-benchmarks } }
+    environment: { MCP_SERVER: model_benchmarks, MCP_PORT: "8117" }
+    ports: ["8117:8117"]
+    profiles: ["external", "all"]
+
+  mcp-papers:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: papers, MCP_EXTRA: mcp-papers } }
+    environment: { MCP_SERVER: papers, MCP_PORT: "8118" }
+    ports: ["8118:8118"]
+    profiles: ["external", "all"]
+
+  mcp-github_releases:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: github_releases, MCP_EXTRA: mcp-github-releases } }
+    environment: { MCP_SERVER: github_releases, MCP_PORT: "8119" }
+    ports: ["8119:8119"]
+    profiles: ["external", "all"]
+
+  mcp-market_data:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: market_data, MCP_EXTRA: mcp-market-data } }
+    environment: { MCP_SERVER: market_data, MCP_PORT: "8120" }
+    ports: ["8120:8120"]
+    retries: 3
+    profiles: ["external", "all"]
+
+  mcp-weather_marine:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: weather_marine, MCP_EXTRA: mcp-weather-marine } }
+    environment: { MCP_SERVER: weather_marine, MCP_PORT: "8121" }
+    ports: ["8121:8121"]
+    profiles: ["external", "all"]
+
+  mcp-regulatory_jp:
+    <<: *mcp-service
+    build: { context: .., dockerfile: apps/api/Dockerfile.mcp, args: { MCP_SERVER: regulatory_jp, MCP_EXTRA: mcp-regulatory-jp } }
+    environment: { MCP_SERVER: regulatory_jp, MCP_PORT: "8122" }
+    ports: ["8122:8122"]
+    profiles: ["external", "all"]
+
+volumes:
+  alba_pg_data:
+  alba_redis_data:

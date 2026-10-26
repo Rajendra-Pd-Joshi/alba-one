@@ -1,0 +1,107 @@
+{
+  "brand": {
+    "product": "ALBA ONE",
+    "company": "ALBACONNECT Inc.",
+    "tagline": "企業の意思決定OSを構築・運用する基盤",
+    "isms_notice": "ISMS認証取得済（ISO/IEC 27001）",
+    "copyright": "© 2026 ALBACONNECT Inc."
+  },
+  "nav": {
+    "decision_workspace": "意思決定ワークスペース",
+    "approvals": "承認",
+    "knowledge": "ナレッジベース",
+    "tools": "ツール連携",
+    "quality": "品質・ガードレール",
+    "outcomes": "成果レビュー",
+    "new_decision": "新規の意思決定を開始"
+  },
+  "pillars": {
+    "business_meaning_and_data": "業務の意味とデータの接続",
+    "workflow_decision_support": "業務ごとの判断支援",
+    "outcome_and_knowledge_ops": "結果と知識の運用"
+  },
+  "glossary": {
+    "decision_os": "意思決定OS",
+    "hypothesis": "仮説",
+    "evidence": "根拠",
+    "confidence": "確信度",
+    "approval": "承認",
+    "rejection": "差し戻し",
+    "outcome_review": "成果レビュー",
+    "knowledge_base": "ナレッジベース",
+    "guardrail": "ガードレール",
+    "ai_recommendation": "AI推奨",
+    "human_decision": "承認の判断",
+    "action_approve": "承認",
+    "action_approve_with_conditions": "条件付き承認",
+    "action_reject": "却下",
+    "action_request_more_evidence": "追加根拠を依頼"
+  },
+  "workspace": {
+    "ai_recommendation_title": "AI推奨（意思決定ジャッジ出力）",
+    "human_decision_title": "承認の判断（人間による最終決定）",
+    "ceiling_applied": "適用上限（Ceiling）",
+    "original_model_verdict": "モデル初期出力",
+    "final_clamped_verdict": "ゲート適用後の最終推奨",
+    "gates_banner_title": "適用された判定上限ルール（Verdict Ceiling Gates）",
+    "gate_blocking_note": "未検証の必須制約があるため、検証完了まで承認推奨（recommend_approve）は不可",
+    "hypotheses_section_title": "検証済仮説および根拠台帳（Evidence Ledger）",
+    "baseline_badge": "必須ベースライン仮説（現状維持）"
+  },
+  "comparison": {
+    "table_title": "選択肢・評価基準の決定論的比較表",
+    "option_column": "選択肢（仮説）",
+    "parameters_not_verified": "パラメータ未検証",
+    "insufficient_data": "データ不足",
+    "missing": "データ欠損",
+    "no_evidence": "根拠なし",
+    "weights_not_reviewed": "重み付け未承認（総合スコア非表示）",
+    "hard_constraint_failed": "必須制約違反",
+    "hard_constraint_passed": "必須制約充足"
+  },
+  "action_bar": {
+    "approve": "承認",
+    "approve_with_conditions": "条件付き承認",
+    "reject": "却下",
+    "request_more_evidence": "追加根拠を依頼",
+    "readonly_non_approver": "閲覧専用：現在のロールにはこのワークフローの承認権限がありません。",
+    "divergence_dialog_title": "AI推奨上限を超える判断の確認",
+    "divergence_dialog_body": "選択された操作は適用ゲートの上限より許容的です。判断理由（必須）を入力してください。",
+    "rationale_label": "判断理由（必須）",
+    "conditions_editor_title": "付帯条件の指定（条件付き承認では必須）",
+    "questions_editor_title": "追加収集する質問項目（追加根拠依頼では必須）",
+    "stale_409_banner": "推奨内容が更新されました。入力済みの判断理由を保持したまま最新状態を再取得しました。",
+    "resume_pending_202": "承認を記録しました（グラフ再開処理中：approval_recorded_resume_pending）"
+  },
+  "outcomes": {
+    "stage1_title": "第1段階：成果レビューの記録（実測KPIと予測の決定論的比較）",
+    "stage2_title": "第2段階：ナレッジスチュワードによる教訓書き戻し（Write-Back）",
+    "steward_disabled_not_saved": "第1段階の成果レビューが保存されるまで書き戻しは実行できません。",
+    "steward_disabled_wrong_role": "この操作にはナレッジスチュワード（knowledge_steward）ロールが必要です。",
+    "steward_disabled_same_person": "職務分掌ルール（WRITEBACK_REQUIRES_DIFFERENT_PERSON）により、成果レビュアー本人は書き戻しを承認できません。",
+    "mt_notice": "機械翻訳ドラフトを含みます。日本語・英語の双方を確認しチェックを入れてください。",
+    "confirm_ja_checkbox": "日本語テキストを確認・確定しました",
+    "confirm_en_checkbox": "英語テキストを確認・確定しました",
+    "what_will_be_written_title": "書き戻し内容の最終プレビュー",
+    "past_lesson_disclaimer": "将来の意思決定では、検証済の事実ではなく「過去の意思決定教訓（参考文脈）」として参照されます。",
+    "deprecate_lesson_button": "この教訓を非推奨化（Deprecate）",
+    "not_enough_data_stats": "統計を表示するためのレビュー件数が不足しています（not enough data）"
+  },
+  "mock_banner": {
+    "label": "デモデータ / Demo data（NEXT_PUBLIC_USE_MOCKS=true）"
+  },
+  "sse": {
+    "connected": "リアルタイム接続中",
+    "reconnecting": "再接続中...",
+    "polling_fallback": "ポーリング同期モードへ切替済"
+  },
+  "errors": {
+    "missing_config": "必須の環境変数または設定が不足しています: {variable}",
+    "unauthorized": "認証情報が無効、または権限が不足しています。",
+    "tenant_mismatch": "テナント境界を越えるアクセスは拒否されました。",
+    "rate_limit_exceeded": "リクエスト上限に達しました。{retry_after}秒後に再試行してください。",
+    "insufficient_evidence": "根拠が不足しているため推奨判断を確定できません。",
+    "guardrail_blocked": "ガードレールポリシー（{policy}）により処理がブロックされました。",
+    "internal_error": "システム内部エラーが発生しました（トレースID: {trace_id}）。"
+  }
+}

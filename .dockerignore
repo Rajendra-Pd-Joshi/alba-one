@@ -1,0 +1,26 @@
+# Ignore secrets, local envs, VCS, build artifacts, caches, and test fixtures
+.git
+.github
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+node_modules/
+apps/web/.next/
+apps/web/out/
+apps/web/playwright-report/
+apps/web/test-results/
+deploy/terraform/.terraform/
+deploy/terraform/*.tfstate*
+artifacts/

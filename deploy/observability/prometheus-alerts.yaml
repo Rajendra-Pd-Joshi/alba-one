@@ -1,0 +1,81 @@
+# ==============================================================================
+# ALBA ONE — Prometheus Alert Rules (`deploy/observability/prometheus-alerts.yaml`)
+# Covers JWKS refresh fallback, guardrail block spikes, p95 latency, cost budget
+# burn, red-team critical bypasses, over-refusal spikes, and dead-man's switch.
+# ==============================================================================
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: alba-one-alerts
+  namespace: alba-one-prod
+spec:
+  groups:
+    - name: alba-one-security-and-ops
+      rules:
+        - alert: AlbaOneJWKSRefreshFailingStaleCache
+          expr: increase(alba_one_jwks_stale_fallback_total[5m]) > 0
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: "OIDC JWKS refresh is failing; serving from stale cache or failing closed"
+            runbook_url: "https://github.com/albaconnect/alba-one/blob/main/deploy/runbooks/key-rotation.md"
+
+        - alert: AlbaOneTenantMismatchSpike
+          expr: sum(rate(alba_one_security_tenant_mismatch_total[5m])) > 0.1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Conflicting or missing tenant_id detected on authenticated requests"
+
+        - alert: AlbaOneRedTeamCriticalBypass
+          expr: sum(redteam_critical_bypass_count) > 0
+          for: 0m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Red-team harness observed 1 or more critical bypasses; block promotion & review containment"
+            runbook_url: "https://github.com/albaconnect/alba-one/blob/main/docs/RUNBOOK.md"
+
+        - alert: AlbaOneRedTeamDeadMansSwitchStale
+          expr: max(redteam_last_run_age_seconds) > 86400 or absent(redteam_last_run_age_seconds)
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Scheduled red-team runs have stopped reporting for > 24 hours (fail-closed gate)"
+
+        - alert: AlbaOneRedTeamOverRefusalSpike
+          # TODO(owner): tune threshold and decide if customer-facing SLO warrants paging
+          expr: max(redteam_false_positive_rate) > 0.05
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Benign false-positive block rate exceeded 5% threshold"
+
+        - alert: AlbaOneGuardrailBlockSpike
+          expr: sum(rate(alba_one_spans_total{status="blocked"}[10m])) / clamp_min(sum(rate(alba_one_spans_total[10m])), 1) > 0.15
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Guardrail block rate exceeded 15% over 10m window"
+
+        - alert: AlbaOneEndToEndLatencyHigh
+          # TODO(owner): tune threshold from measured production SLOs
+          expr: histogram_quantile(0.95, sum(rate(alba_one_decision_latency_ms_bucket[15m])) by (le)) > 25000
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Decision p95 end-to-end latency exceeded 25s"
+
+        - alert: AlbaOneTenantDailyCostNearCap
+          expr: alba_one_tenant_daily_cost_usd / alba_one_tenant_daily_cost_limit_usd > 0.85
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Tenant daily LLM/tool cost exceeded 85% of configured daily cap"

@@ -1,0 +1,108 @@
+# ==============================================================================
+# ALBA ONE — Production Helm Values (`deploy/helm/alba-one/values.yaml`)
+# - Production uses managed RDS PostgreSQL (`pgvector`) and ElastiCache Redis
+#   provisioned via `deploy/terraform` (`devInClusterStores.enabled: false`).
+# - Every pod enforces `runAsNonRoot: true`, `runAsUser: 10001`,
+#   `readOnlyRootFilesystem: true`, `allowPrivilegeEscalation: false`,
+#   `capabilities.drop: [ALL]`, and `seccompProfile.type: RuntimeDefault`.
+# - Secret rotation triggers zero-downtime rolling restarts via
+#   `reloader.stakater.com/auto: "true"` + checksum annotations.
+# ==============================================================================
+global:
+  appEnv: production
+  imageRegistry: 123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/alba-one
+  imagePullPolicy: IfNotPresent
+  reloaderEnabled: true
+
+devInClusterStores:
+  # Strictly disabled in production/staging; only enabled in values-dev.yaml for local kind
+  enabled: false
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 10001
+  runAsGroup: 10001
+  fsGroup: 10001
+  seccompProfile:
+    type: RuntimeDefault
+
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+
+api:
+  replicaCount: 3
+  image:
+    repository: api
+    tag: "1.0.0"
+  # TODO(owner): tune from measured load tests
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+    limits:
+      cpu: "1500m"
+      memory: "1024Mi"
+  hpa:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 12
+    targetCPUUtilizationPercentage: 70
+  pdb:
+    minAvailable: 2
+
+worker:
+  replicaCount: 2
+  image:
+    repository: worker
+    tag: "1.0.0"
+  # TODO(owner): tune from measured load tests
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "1000m"
+      memory: "512Mi"
+  pdb:
+    minAvailable: 1
+
+web:
+  replicaCount: 3
+  image:
+    repository: web
+    tag: "1.0.0"
+  # TODO(owner): tune from measured load tests
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "1000m"
+      memory: "512Mi"
+  hpa:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+  pdb:
+    minAvailable: 2
+
+egressGateway:
+  enabled: true
+  allowedDomains:
+    - "api.portkey.ai"
+    - "api.openai.com"
+    - "api.cohere.com"
+    - "api.tavily.com"
+    - "api.search.brave.com"
+    - "api.firecrawl.dev"
+    - "api.smith.langchain.com"
+
+ingress:
+  enabled: true
+  host: alba-one.albaconnect.co.jp
+  tlsSecretName: alba-one-edge-tls

@@ -1,0 +1,25 @@
+# ALBA ONE — Evaluation Thresholds (evals/thresholds.yaml)
+# Principle 10: Never fabricate benchmark numbers or thresholds.
+# Replace TODO(owner) values only after calibrating on human-reviewed goldens.
+
+retrieval:
+  contextual_recall_min: "TODO(owner)"
+  contextual_precision_min: "TODO(owner)"
+  contextual_relevancy_min: "TODO(owner)"
+  ndcg_at_10_min: "TODO(owner)"
+
+hypothesis_and_judge:
+  faithfulness_min: "TODO(owner)"
+  citation_coverage_min: "TODO(owner)"
+  plan_quality_min: "TODO(owner)"
+  plan_adherence_min: "TODO(owner)"
+
+mcp_tools:
+  tool_correctness_min: "TODO(owner)"
+  argument_correctness_min: "TODO(owner)"
+  mcp_task_completion_min: "TODO(owner)"
+
+safety_and_guardrails:
+  toxicity_max: "TODO(owner)"
+  pii_leakage_max: "TODO(owner)"
+  guardrail_block_recall_min: "TODO(owner)"

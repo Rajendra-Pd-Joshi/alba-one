@@ -1,0 +1,176 @@
+{
+  "schema_version": "1.0",
+  "status": "draft",
+  "description": "Hand-verified golden dataset for deterministic domain calculators (Phase 6 User Answer 3). Domain owners must review and change status to 'reviewed'.",
+  "items": [
+    {
+      "id": "calc_sla_001_ok",
+      "status": "draft",
+      "calculator": "delivery.sla_breach_empirical",
+      "inputs": {
+        "sla_limit_hours": 6.0,
+        "historical_transit_hours": [5.1, 5.4, 5.8, 6.2, 5.5, 5.3, 6.4, 5.2, 5.6, 5.7],
+        "planned_buffer_hours": 0.0,
+        "min_sample_size": 5,
+        "seed": 42
+      },
+      "expected": {
+        "status": "ok",
+        "value": 0.2,
+        "unit": "probability",
+        "scenarios": {
+          "low": 0.0,
+          "base": 0.2,
+          "high": 0.5
+        },
+        "sample_size": 10
+      }
+    },
+    {
+      "id": "calc_sla_002_insufficient_data",
+      "status": "draft",
+      "calculator": "delivery.sla_breach_empirical",
+      "inputs": {
+        "sla_limit_hours": 6.0,
+        "historical_transit_hours": [5.2, 6.1, 5.8],
+        "planned_buffer_hours": 0.0,
+        "min_sample_size": 5,
+        "seed": 42
+      },
+      "expected": {
+        "status": "insufficient_data",
+        "value": null,
+        "unit": "probability",
+        "sample_size": 3
+      }
+    },
+    {
+      "id": "calc_route_cost_003_jpy",
+      "status": "draft",
+      "calculator": "delivery.route_cost_jpy",
+      "inputs": {
+        "distance_km": 350.0,
+        "base_rate_jpy_per_km": 280.0,
+        "reefer_surcharge_jpy": 25000.0,
+        "highway_toll_jpy": 18000.0,
+        "fuel_multiplier_low": 0.92,
+        "fuel_multiplier_high": 1.15,
+        "currency": "JPY"
+      },
+      "expected": {
+        "status": "ok",
+        "value": 141000.0,
+        "unit": "JPY",
+        "scenarios": {
+          "low": 133160.0,
+          "base": 141000.0,
+          "high": 155700.0
+        }
+      }
+    },
+    {
+      "id": "calc_overtime_004_unverified_default",
+      "status": "draft",
+      "calculator": "staffing.article36_overtime_margin",
+      "inputs": {
+        "current_monthly_overtime_hours": 38.5,
+        "planned_additional_hours_base": 4.0
+      },
+      "expected": {
+        "status": "parameters_not_verified",
+        "value": null,
+        "unit": "hours/month"
+      }
+    },
+    {
+      "id": "calc_overtime_005_verified_override",
+      "status": "draft",
+      "calculator": "staffing.article36_overtime_margin",
+      "inputs": {
+        "current_monthly_overtime_hours": 38.5,
+        "planned_additional_hours_base": 4.0,
+        "planned_additional_hours_low": 2.5,
+        "planned_additional_hours_high": 7.5,
+        "verified_overrides": {
+          "jp_labor_article36_monthly_overtime_hours": "HR-Director-Yamada-2026-10-24"
+        }
+      },
+      "expected": {
+        "status": "ok",
+        "value": 2.5,
+        "unit": "hours/month",
+        "scenarios": {
+          "low": -1.0,
+          "base": 2.5,
+          "high": 4.0
+        }
+      }
+    },
+    {
+      "id": "calc_berth_ukc_006_verified_override",
+      "status": "draft",
+      "calculator": "vessel.berth_ukc_margin_m",
+      "inputs": {
+        "berth_depth_m": 14.5,
+        "vessel_draft_m": 12.8,
+        "tide_offset_base_m": 0.2,
+        "tide_offset_low_m": -0.4,
+        "tide_offset_high_m": 0.5,
+        "verified_overrides": {
+          "port_berth_under_keel_clearance_min_m": "Port-Captain-Sato-2026-10-24"
+        }
+      },
+      "expected": {
+        "status": "ok",
+        "value": 0.7,
+        "unit": "meters",
+        "scenarios": {
+          "low": 0.1,
+          "base": 0.7,
+          "high": 1.0
+        }
+      }
+    },
+    {
+      "id": "calc_release_007_five_runs_significant",
+      "status": "draft",
+      "calculator": "experiment.model_release_delta",
+      "inputs": {
+        "metric_name": "p95_latency_ms",
+        "unit": "ms",
+        "baseline_runs": [410.0, 415.0, 405.0, 420.0, 410.0],
+        "candidate_runs": [380.0, 385.0, 390.0, 382.0, 388.0],
+        "min_runs_for_significance": 5
+      },
+      "expected": {
+        "status": "ok",
+        "value": -27.0,
+        "unit": "ms",
+        "pct_change": -6.55,
+        "scenarios": {
+          "low": -40.0,
+          "base": -27.0,
+          "high": -15.0
+        }
+      }
+    },
+    {
+      "id": "calc_release_008_too_few_runs_warning",
+      "status": "draft",
+      "calculator": "experiment.model_release_delta",
+      "inputs": {
+        "metric_name": "ndcg_at_10",
+        "unit": "score",
+        "baseline_runs": [0.85, 0.87],
+        "candidate_runs": [0.89, 0.91],
+        "min_runs_for_significance": 5
+      },
+      "expected": {
+        "status": "ok",
+        "value": 0.04,
+        "unit": "score",
+        "warning_substring": "not enough runs to assess statistical significance"
+      }
+    }
+  ]
+}
